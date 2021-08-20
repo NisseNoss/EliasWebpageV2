@@ -1,0 +1,23 @@
+body {
+    max-width: 1500px;
+    background-color:#1E1E1E;
+    display: flex;
+    margin: auto;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+body > header {
+    color: white;
+    text-align: center;
+    font-size: 40px;
+    margin-top: 6px;
+}
+
+body > menu {
+    text-align: center; 
+    color: white;
+    transition: 0.5s;
+    padding: 0px;
+}   
