@@ -1,23 +1,125 @@
-body {
-    max-width: 1500px;
-    background-color:#1E1E1E;
-    display: flex;
-    margin: auto;
-    flex-wrap: nowrap;
-    flex-direction: column;
-    overflow-x: hidden;
+* {
+    box-sizing: border-box;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
 }
 
-body > header {
-    color: white;
+* {
+    font-family: 'Vollkorn', Arial, serif;
+    font-size: 1em; 
+  }
+
+body {
+    background-color:#1E1E1E; /* Bakgrunns farge */
+    --text_color: white;
+    --text_hover: blue;
+}
+
+/*###################################################### --- Header*/
+
+body > header { /* Påvirker bare header tagen */
+    color: var(--text_color);
     text-align: center;
     font-size: 40px;
     margin-top: 6px;
+    margin-bottom: 3px;
 }
 
-body > menu {
-    text-align: center; 
-    color: white;
-    transition: 0.5s;
-    padding: 0px;
-}   
+/*###################################################### --- Menu*/
+
+.menu-container {
+    width: 100%;
+    display: flex; /* Gjør body til en flexbox */
+    margin: auto;
+    flex-direction: column; /* Flexboxene går nedover */
+    align-items: center;
+}
+
+.main-menu {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-top: 25px;  /* Space for logo */
+    overflow: visible;
+    
+    max-width: 700px;  /* Keeps the buttons getting too far from each other on largest screens */
+}
+
+.main-menu a {
+    width: 100%;
+    text-align: center;
+    padding: .75em 1em;
+    display: block;
+    color: #CCCCCC;
+    border-bottom: 2px solid #ddd;
+}
+
+.main-menu a:hover {
+    color: #007ACC;
+    border-bottom-color: #007ACC;
+}
+
+/*############################################################# --- Animation */
+
+.drop-menu {
+    display: flex;
+    flex-direction: column; /* This never changes */
+    align-items: center;
+    width: 100%; /* Allows sub buttons to stretch across button width in main-menu*/
+    transition: max-height .4s, opacity .3s;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden; /* Keeps links in drop menu from displaying until height is large enough */
+  }
+
+.drop-menu > .menu-button {
+    height: 100%;
+    transition: transform .4s;
+    transform: translateY(-300%);
+    background: #3d3d3d; /* Makes the menu effects visible on close */ 
+}
+
+.dropdown-wrapper:hover .drop-menu{
+    max-height: 300px;  
+    opacity: 1;
+}
+
+.dropdown-wrapper:hover > .drop-menu .menu-button {
+    transform: translateY(0%);
+}
+
+@media (min-width: 550px){
+        .effect {
+        transition: max-height 0s;
+        opacity: 1;
+        background: transparent;
+    }
+
+    .effect .menu-button{
+        transform: translateY(0%);
+    }
+
+    .menu-container {
+        width: 90%;
+    }
+
+    .menu-container {
+        height: 100px;
+        justify-content: space-between;
+    }
+
+    .main-menu {   
+        flex-direction: row; /* Horizontal main menu buttons */
+        align-items: flex-start; /* Makes the top of the 'dropdown-wrapper' div stay flush with button top because it's aligned on the cross-axis */
+        height: 48px; /* Setting the height allows the dropdown outside of it's parent's bounds, therefore not compensated for by the flex. */
+        margin: 0;
+      }
+        
+      .main-menu > .menu-button {
+        width: 23%;
+        max-width: 150px;
+      }
+}
