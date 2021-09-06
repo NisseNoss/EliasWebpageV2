@@ -19,13 +19,35 @@ body {
 
 /*###################################################### --- Header*/
 
-body > header { /* Påvirker bare header tagen */
-    color: var(--text_color);
-    text-align: center;
-    font-size: 40px;
-    margin-top: 6px;
-    margin-bottom: 3px;
+.header-container {
+    width: 100%;
+    margin: auto; 
+    display: flex;
+    flex-direction: column; /* Logo starts stacked on top of nav */
+    justify-content: space-between;
+    align-items: center;
 }
+
+.title {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 25px;  /* Space for logo */
+    overflow: visible;
+}
+
+.title h1 {
+    color: white;
+    font-size: 3em;
+    text-align: center;
+}
+
+.logo {
+    max-width: 120px;
+    max-height: 120px;
+    margin-top: 10px; 
+  }
 
 /*###################################################### --- Menu*/
 
@@ -54,12 +76,13 @@ body > header { /* Påvirker bare header tagen */
     padding: .75em 1em;
     display: block;
     color: #CCCCCC;
-    border-bottom: 2px solid #ddd;
+    /*border-bottom: 2px solid #ddd;*/
 }
 
 .main-menu a:hover {
     color: #007ACC;
-    border-bottom-color: #007ACC;
+    /*border-bottom-color: #007ACC;*/
+    border-bottom: 2px solid #007ACC;
 }
 
 /*############################################################# --- Animation */
@@ -79,7 +102,7 @@ body > header { /* Påvirker bare header tagen */
     height: 100%;
     transition: transform .4s;
     transform: translateY(-300%);
-    background: #3d3d3d; /* Makes the menu effects visible on close */ 
+    background: #424040; /* Makes the menu effects visible on close */ 
 }
 
 .dropdown-wrapper:hover .drop-menu{
@@ -91,7 +114,7 @@ body > header { /* Påvirker bare header tagen */
     transform: translateY(0%);
 }
 
-@media (min-width: 550px){
+@media (min-width: 550px) {
         .effect {
         transition: max-height 0s;
         opacity: 1;
@@ -111,6 +134,22 @@ body > header { /* Påvirker bare header tagen */
         justify-content: space-between;
     }
 
+    .header-container {
+        width: 90%;
+    }
+    
+    .header-container {
+        height: 200px;
+        justify-content: space-between; /* Pushes logo to top, nav bar all the way down */
+    }
+
+    .title {   
+        flex-direction: row; /* Horizontal main menu buttons */
+        align-items: flex-start; /* Makes the top of the 'dropdown-wrapper' div stay flush with button top because it's aligned on the cross-axis */
+        height: 48px; /* Setting the height allows the dropdown outside of it's parent's bounds, therefore not compensated for by the flex. */
+        margin: 0;
+      }
+
     .main-menu {   
         flex-direction: row; /* Horizontal main menu buttons */
         align-items: flex-start; /* Makes the top of the 'dropdown-wrapper' div stay flush with button top because it's aligned on the cross-axis */
@@ -122,4 +161,39 @@ body > header { /* Påvirker bare header tagen */
         width: 23%;
         max-width: 150px;
       }
+
+      .logo {
+        max-width: 130px;
+        max-height: 130px;
+        margin-top: 15px; 
+      }
+}
+
+@media (min-width: 850px) {
+
+    .header-container {
+      flex-direction: row; /* Places logo on the same line as .main-menu */
+      justify-content: space-around; 
+      height: 160px;
+      } 
+  
+    .title {
+        width: 50%;
+        justify-content: space-between;
+    }
+  
+    .logo {
+      margin: 0;
+    }
+  
+}
+
+@media (max-width: 550px){
+    .main-menu a {
+        border-bottom: 2px solid #ddd;
+    }
+
+    .main-menu a:hover {
+        border-bottom-color: #007ACC;
+    }
 }
