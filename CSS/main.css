@@ -24,7 +24,7 @@ body {
     margin: auto; 
     display: flex;
     flex-direction: column; /* Logo starts stacked on top of nav */
-    justify-content: space-between;
+    justify-content: space-between; 
     align-items: center;
 }
 
@@ -49,7 +49,7 @@ body {
     margin-top: 10px; 
   }
 
-/*###################################################### --- Menu*/
+/*############################################################# --- Menu*/
 
 .menu-container {
     width: 100%;
@@ -60,6 +60,7 @@ body {
 }
 
 .main-menu {
+    
     width: 100%;
     display: flex;
     flex-direction: column;
