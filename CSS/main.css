@@ -85,6 +85,15 @@ body {
     border-bottom: 2px solid #007ACC;
 }
 
+/*############################################################# --- Main */
+
+.main-container {
+    width: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+}
+
 /*############################################################# --- Animation */
 
 .drop-menu {
@@ -114,16 +123,16 @@ body {
     transform: translateY(0%);
 }
 
-@media (min-width: 550px) {
-        .effect {
+@media (min-width: 550px) {/* Hvis den er medium stor */
+        /*.effect {
         transition: max-height 0s;
         opacity: 1;
         background: transparent;
-    }
+    }*/
 
-    .effect .menu-button{
+    /*.effect .menu-button{
         transform: translateY(0%);
-    }
+    }*/
 
     .menu-container {
         width: 90%;
@@ -141,6 +150,10 @@ body {
     .header-container {
         height: 200px;
         justify-content: space-between; /* Pushes logo to top, nav bar all the way down */
+    }
+
+    .main-container {
+        width: 90%;
     }
 
     .title {   
@@ -169,7 +182,7 @@ body {
       }
 }
 
-@media (min-width: 850px) {
+@media (min-width: 850px) { /* Hvis den er stor */
 
     .header-container {
       flex-direction: row; /* Places logo on the same line as .main-menu */
