@@ -24,7 +24,7 @@ body {
     margin: auto; 
     display: flex;
     flex-direction: column; /* Logo starts stacked on top of nav */
-    justify-content: space-between; 
+    justify-content: center; 
     align-items: center;
 }
 
@@ -108,18 +108,18 @@ body {
     margin-top: 10px;
     padding: 6px;
     background-color: #252526;
-    min-height: 200px;
+    min-height: 450px;
     box-shadow: 3px 3px 2px 1px rgba(0, 0, 0, 0.2);
+    margin-bottom: 10px;
 }
 
 .main-window p {
     color: #CCCCCC;
-    margin-top: 2px;
 }
 
 /*############################################################# --- Footer */
 
-.footer-container {
+.futa-container {
     width: 100%;
     margin: auto;
     display: flex;
@@ -127,17 +127,18 @@ body {
     align-items: center;
 }
 
-.footer {
+.futa {
     width: 100%;
-    margin-bottom: 1em;
-    position: fixed;
-    text-align: center;
-    left: 0;
-    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-top: 2px solid #007ACC;
 }
 
-.footer p {
+.futa p {
     color: #CCCCCC;
+    min-height: 5em;
+    padding-top: 2em;
 }
 
 /*############################################################# --- Animation */
