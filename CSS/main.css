@@ -37,10 +37,25 @@ body {
     overflow: visible;
 }
 
+.title-b {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 25px;  /* Space for logo */
+    overflow: visible;
+}
+
 .title h1 {
     color: white;
     font-size: 3em;
     text-align: center;
+}
+
+.title-b h1 {
+    color: white;
+    font-size: 3em;
+    /*text-align: center;*/
 }
 
 .logo {
@@ -57,11 +72,13 @@ body {
     margin: auto;
     flex-direction: column; /* Flexboxene går nedover */
     align-items: center;
+}
 
+.line {
+    border-top: 2px solid #007ACC;
 }
 
 .main-menu {
-    
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -155,7 +172,7 @@ body {
 
 .drop-menu > .menu-button {
     height: 100%;
-    transition: transform .4s;
+    transition: transform .3s;
     transform: translateY(-300%);
     background: #424040; /* Makes the menu effects visible on close */ 
 }
@@ -191,9 +208,6 @@ body {
 
     .header-container {
         width: 90%;
-    }
-    
-    .header-container {
         height: 200px;
         justify-content: space-between; /* Pushes logo to top, nav bar all the way down */
     }
@@ -207,25 +221,36 @@ body {
         align-items: flex-start; /* Makes the top of the 'dropdown-wrapper' div stay flush with button top because it's aligned on the cross-axis */
         height: 48px; /* Setting the height allows the dropdown outside of it's parent's bounds, therefore not compensated for by the flex. */
         margin: 0;
-      }
+    }
 
     .main-menu {   
         flex-direction: row; /* Horizontal main menu buttons */
         align-items: flex-start; /* Makes the top of the 'dropdown-wrapper' div stay flush with button top because it's aligned on the cross-axis */
         height: 48px; /* Setting the height allows the dropdown outside of it's parent's bounds, therefore not compensated for by the flex. */
         margin: 0;
-      }
+    }
         
-      .main-menu > .menu-button {
+    .main-menu > .menu-button {
         width: 23%;
         max-width: 150px;
-      }
+    }
 
-      .logo {
+    .logo {
         max-width: 130px;
         max-height: 130px;
         margin-top: 15px; 
-      }
+    }
+
+    .line {
+        width: 80%;
+        margin: auto;
+        padding: 10px 0 10px 0;
+    }
+
+    .futa {
+        width: 80%;
+        margin: auto;
+    }
 }
 
 @media (min-width: 850px) { /* Hvis den er stor */
@@ -237,7 +262,12 @@ body {
       } 
   
     .title {
-        width: 50%;
+        width: auto;
+        justify-content: space-between;
+    }
+
+    .title-b {
+        width: 46%;
         justify-content: space-between;
     }
   
@@ -248,7 +278,20 @@ body {
     .main-window {
         width: 80%;
     }
-  
+
+    .dead {
+        width: 120px;
+    }
+
+    .line {
+        width: 80%;
+        margin: auto;
+    }
+
+    .futa {
+        width: 80%;
+        margin: auto;
+    }
 }
 
 @media (max-width: 550px){ 
