@@ -49,7 +49,7 @@ body {
     margin-top: 10px; 
   }
 
-/*############################################################# --- Menu*/
+//############################################################# --- Menu
 
 .menu-container {
     width: 100%;
@@ -73,7 +73,7 @@ body {
     border: 2px outset rgba(0, 0, 0, 0.2);
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
 
-    max-width: 700px;  /* Keeps the buttons getting too far from each other on largest screens */
+    max-width: 700px;  //Keeps the buttons getting too far from each other on largest screens
 }
 
 .main-menu a {
@@ -82,7 +82,7 @@ body {
     padding: .75em 1em;
     display: block;
     color: #CCCCCC;
-    /*border-bottom: 2px solid #ddd;*/
+    //border-bottom: 2px solid #ddd;
 }
 
 .main-menu a:hover {
@@ -92,7 +92,7 @@ body {
 }
 
 
-/* ############################################################# --- Main */
+// ############################################################# --- Main
 
 .main-container {
     width: 100%;
@@ -118,7 +118,7 @@ body {
     color: #CCCCCC;
 }
 
-/*############################################################# --- Footer */
+//############################################################# --- Footer
 
 .futa-container {
     width: 100%;
@@ -142,24 +142,24 @@ body {
     padding-top: 2em;
 }
 
-/*############################################################# --- Animation */
+//############################################################# --- Animation
 
 .drop-menu {
     display: flex;
-    flex-direction: column; /* This never changes */
+    flex-direction: column; // This never changes
     align-items: center;
-    width: 100%; /* Allows sub buttons to stretch across button width in main-menu*/
+    width: 100%; //Allows sub buttons to stretch across button width in main-menu
     transition: max-height .4s, opacity .3s;
     max-height: 0;
     opacity: 0;
-    overflow: hidden; /* Keeps links in drop menu from displaying until height is large enough */
+    overflow: hidden; // Keeps links in drop menu from displaying until height is large enough
   }
 
 .drop-menu > .menu-button {
     height: 100%;
     transition: transform .3s;
     transform: translateY(-300%);
-    background: #424040; /* Makes the menu effects visible on close */ 
+    background: #424040; // Makes the menu effects visible on close //
 }
 
 .dropdown-wrapper:hover .drop-menu{
@@ -171,7 +171,7 @@ body {
     transform: translateY(0%);
 }
 
-@media (min-width: 550px) {/* Hvis den er medium stor */
+@media (min-width: 550px) {// Hvis den er medium stor
         /*.effect {
         transition: max-height 0s;
         opacity: 1;
