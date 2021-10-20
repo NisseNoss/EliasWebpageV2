@@ -49,7 +49,7 @@ class GridSystem {
 
         for (let row = 0; row < this.matrix.length; row ++ ) {
             for (let col = 0; col < this.matrix[row].length; col ++) {
-                this.outlineContext.fillStyle = this.matrix[row][col] > 0 ? "#4488FF" : "#111";
+                this.outlineContext.fillStyle = this.matrix[row][col] > 0 ? "#4488FF" : "#111"; // kan legge til flere med ||
                 this.outlineContext.fillRect(col * (this.cellSize + this.padding),
                 row * (this.cellSize + this.padding),
                 this.cellSize, this.cellSize);

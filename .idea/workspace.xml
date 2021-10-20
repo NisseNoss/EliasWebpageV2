@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4d369531-bd46-4e74-8b55-164ec2e5844f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Game/game.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game/pacman.html" beforeDir="false" afterPath="$PROJECT_DIR$/Game/pacman.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game/game.js" beforeDir="false" afterPath="$PROJECT_DIR$/Game/game.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PLAN" beforeDir="false" afterPath="$PROJECT_DIR$/PLAN" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,6 +57,13 @@
       <workItem from="1634548464392" duration="8000" />
       <workItem from="1634716448619" duration="714000" />
     </task>
+    <task id="LOCAL−00001" summary="kreft">
+      <created>1634753462644</created>
+      <option name="number" value="LOCAL−00001" />
+      <option name="presentableId" value="LOCAL−00001" />
+      <updated>1634753462644</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -73,5 +80,9 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="kreft" />
+    <option name="LAST_COMMIT_MESSAGE" value="kreft" />
   </component>
 </project>
