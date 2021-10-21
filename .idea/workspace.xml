@@ -6,6 +6,7 @@
       <change beforePath="$PROJECT_DIR$/Game/game.js" beforeDir="false" afterPath="$PROJECT_DIR$/Game/game.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Game/pacman.html" beforeDir="false" afterPath="$PROJECT_DIR$/Game/pacman.html" afterDir="false" />
     </list>
+    <list default="true" id="4d369531-bd46-4e74-8b55-164ec2e5844f" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -43,7 +44,12 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+<<<<<<< Updated upstream
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+=======
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../help" />
+    <property name="settings.editor.selected.configurable" value="watcher.settings" />
+>>>>>>> Stashed changes
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -56,6 +62,7 @@
       <workItem from="1633677807948" duration="2749000" />
       <workItem from="1634548464392" duration="8000" />
       <workItem from="1634716448619" duration="714000" />
+      <workItem from="1634733114905" duration="109000" />
     </task>
     <task id="LOCAL−00001" summary="kreft">
       <created>1634753462644</created>
@@ -86,9 +93,12 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+<<<<<<< Updated upstream
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="kreft" />
     <option name="LAST_COMMIT_MESSAGE" value="kreft" />
+=======
+>>>>>>> Stashed changes
   </component>
 </project>
