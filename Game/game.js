@@ -1,3 +1,5 @@
+//TODO Legg til pacman og gjør han bevegli
+//TODO Gjør vegger i grid
 class GridSystem { //TODO fortsette
     //TODO kommentere
     constructor(matrix) {
