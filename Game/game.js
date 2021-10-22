@@ -6,7 +6,7 @@ class GridSystem { //TODO fortsette
         this.outlineContext = this.#getContext(0, 0, "#000");
         this.topContext = this.#getContext(0, 0, "#000", true);
         this.cellSize = 24;
-        this.padding = 0;
+        this.padding = 1;
     }
 
     #getCenter (w, h) { // Sentrerer tingen
