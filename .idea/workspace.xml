@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4d369531-bd46-4e74-8b55-164ec2e5844f" name="Changes" comment="kreft">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="4d369531-bd46-4e74-8b55-164ec2e5844f" name="Changes" comment="kreft" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -41,7 +39,6 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../help" />
     <property name="settings.editor.selected.configurable" value="watcher.settings" />
   </component>
@@ -57,6 +54,7 @@
       <workItem from="1634548464392" duration="8000" />
       <workItem from="1634716448619" duration="714000" />
       <workItem from="1634733114905" duration="109000" />
+      <workItem from="1634894859219" duration="151000" />
     </task>
     <task id="LOCAL−00001" summary="kreft">
       <created>1634753462644</created>
