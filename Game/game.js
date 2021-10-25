@@ -1,5 +1,6 @@
-//TODO Legg til pacman og gjør han bevegli
-//TODO Gjør vegger i grid
+//TODO Gjør pacman bevegli
+//TODO Gi Spillet en FPS
+//TODO Leg til en fiende
 class GridSystem { //TODO fortsette
     //TODO kommentere
     constructor(matrix, pacmanX, pacmanY) {
