@@ -1,6 +1,8 @@
 //TODO Gjør pacman bevegli
 //TODO Gi Spillet en FPS
 //TODO Leg til en fiende
+let gameLost = 0
+
 class GridSystem { //TODO fortsette
     //TODO kommentere
     constructor(matrix, pacmanX, pacmanY) {
@@ -12,8 +14,22 @@ class GridSystem { //TODO fortsette
         this.padding = 1;
         this.pacman = {x: pacmanX, y: pacmanY, color: "orange"}
         this.matrix [pacmanY][pacmanX] = 3;
+        this.dir = null;
+        this.speed = 5;
+        this.timer = 0;
+        this.rotation = 0;
+        this.gamelost = false;
 
-        document.addEventListener("keydown", this.#movePacman)
+        document.addEventListener("keydown", this.movePacman)
+    }
+
+    #fps() {
+        if (this.timer === this.speed) {
+            this.timer = 0;
+            return true;
+        }
+        this.timer++
+        return false;
     }
 
     #isValidMove(x, y) {
@@ -27,36 +43,61 @@ class GridSystem { //TODO fortsette
         this.matrix[y][x] = val;
     }
 
-    #movePacman = ({keyCode}) => {
-        if (keyCode === 65) { // Venstre
-            if (this.#isValidMove(-1, 0)) {
-                this.#updateMatrix(this.pacman.y, this.pacman.x, 0)
-                this.#updateMatrix(this.pacman.y, this.pacman.x - 1, 3)
-                this.pacman.x--;
-                this.loadPosition();
+    #rotatePacman(){
+        if (keyCode === 65) { // venstre
+            this.rotation = 0;
+        }
+        if (keyCode === 65) { // høyre
+            this.rotation = 180;
+        }
+        if (keyCode === 65) { // opp
+            this.rotation = 90;
+        }
+        if (keyCode === 65) { // ned
+            this.rotation = 270;
+        }
+   }
+
+    movePacman = ({keyCode}) => {
+        //document.addEventListener("keydown", this.#rotatePacman)
+        if (this.#fps()) {
+            if (this.rotation === 0) { // venstre
+                if (this.#isValidMove(-1, 0 )) {
+                    this.#updateMatrix(this.pacman.y, this.pacman.x, 0)
+                    this.#updateMatrix(this.pacman.y, this.pacman.x - 1, 3)
+                    this.pacman.x--;
+                    //this.loadPosition();
+                }
             }
-        } else if (keyCode === 68) { // Høyre
-            if (this.#isValidMove(1, 0)) {
-                this.#updateMatrix(this.pacman.y, this.pacman.x, 0)
-                this.#updateMatrix(this.pacman.y, this.pacman.x + 1, 3)
-                this.pacman.x++;
-                this.loadPosition();
+            if (this.rotation === 180) { // høyre
+                if (this.#isValidMove(1, 0)) {
+                    this.#updateMatrix(this.pacman.y, this.pacman.x, 0)
+                    this.#updateMatrix(this.pacman.y, this.pacman.x + 1, 3)
+                    this.pacman.x++;
+                    //this.loadPosition();
+                }
             }
-        } else if (keyCode === 87) { // Opp
-            if (this.#isValidMove(0, -1)) {
-                this.#updateMatrix(this.pacman.y, this.pacman.x, 0)
-                this.#updateMatrix(this.pacman.y - 1, this.pacman.x, 3)
-                this.pacman.y--;
-                this.loadPosition();
+            if (this.rotation === 90) { // opp
+                if (this.#isValidMove(0, -1)) {
+                    this.#updateMatrix(this.pacman.y, this.pacman.x, 0)
+                    this.#updateMatrix(this.pacman.y - 1, this.pacman.x, 3)
+                    this.pacman.y--;
+                    //this.loadPosition();
+                }
             }
-        } else if (keyCode === 83) { // Ned
-            if (this.#isValidMove(0, 1)) {
-                this.#updateMatrix(this.pacman.y, this.pacman.x, 0)
-                this.#updateMatrix(this.pacman.y + 1, this.pacman.x, 3)
-                this.pacman.y++;
-                this.loadPosition();
+            if (this.rotation === 270) { // ned
+                if (this.#isValidMove(0, 1)) {
+                    this.#updateMatrix(this.pacman.y, this.pacman.x, 0)
+                    this.#updateMatrix(this.pacman.y + 1, this.pacman.x, 3)
+                    this.pacman.y++;
+                    //this.loadPosition();
+                }
+            } else {
+                return;
             }
         }
+        this.loadPosition()
+        setTimeout(this.movePacman(),1000/10)
     }
 
     #getCenter(w, h) { // Sentrerer tingen
@@ -111,7 +152,6 @@ class GridSystem { //TODO fortsette
             for (let col = 0; col < this.matrix[row].length; col++) {
                 const cellVal = this.matrix[row][col];
                 let color = "#111";
-                let pacColor = this.pacman.color;
 
                 if (cellVal === 1) {
                     color = "#4488FF";
@@ -147,8 +187,7 @@ class GridSystem { //TODO fortsette
                 const cellVal = this.matrix[row][col];
 
                 if (cellVal === 3) {
-                    let color = this.pacman.color
-                    this.topContext.fillStyle = color;
+                    this.topContext.fillStyle = this.pacman.color;
                     this.topContext.fillRect(col * (this.cellSize + this.padding),
                         row * (this.cellSize + this.padding),
                         this.cellSize, this.cellSize);
@@ -195,3 +234,5 @@ const gridMatrix = [
 const gridSystem = new GridSystem(gridMatrix,14, 23);
 gridSystem.render();
 gridSystem.loadPosition();
+
+
