@@ -1,7 +1,6 @@
 //TODO Gjør pacman bevegli
 //TODO Gi Spillet en FPS
 //TODO Leg til en fiende
-let gameLost = 0
 
 class GridSystem { //TODO fortsette
     //TODO kommentere
@@ -16,21 +15,21 @@ class GridSystem { //TODO fortsette
         this.matrix [pacmanY][pacmanX] = 3;
         this.dir = null;
         this.speed = 5;
-        this.timer = 0;
+        this.FPS = 5;
         this.rotation = 0;
-        this.gamelost = false;
+        this.play = false
 
-        document.addEventListener("keydown", this.movePacman)
+        document.addEventListener("keydown", this.#rotatePacman)
     }
 
-    #fps() {
+    /*#fps() {
         if (this.timer === this.speed) {
             this.timer = 0;
             return true;
         }
         this.timer++
         return false;
-    }
+    }*/
 
     #isValidMove(x, y) {
         if (this.matrix[this.pacman.y + y][this.pacman.x + x] === 0) {
@@ -43,61 +42,64 @@ class GridSystem { //TODO fortsette
         this.matrix[y][x] = val;
     }
 
-    #rotatePacman(){
+    #rotatePacman = ({keyCode}) =>{
+
+        this.play = true;
+
         if (keyCode === 65) { // venstre
             this.rotation = 0;
+            console.log("a pressed");
         }
-        if (keyCode === 65) { // høyre
+        else if (keyCode === 68) { // høyre
             this.rotation = 180;
+            console.log("d pressed");
         }
-        if (keyCode === 65) { // opp
+        else if (keyCode === 87) { // opp
             this.rotation = 90;
+            console.log("w pressed");
         }
-        if (keyCode === 65) { // ned
+        else if (keyCode === 83) { // ned
             this.rotation = 270;
+            console.log("s pressed");
         }
    }
-
-    movePacman = ({keyCode}) => {
-        //document.addEventListener("keydown", this.#rotatePacman)
-        if (this.#fps()) {
-            if (this.rotation === 0) { // venstre
-                if (this.#isValidMove(-1, 0 )) {
-                    this.#updateMatrix(this.pacman.y, this.pacman.x, 0)
-                    this.#updateMatrix(this.pacman.y, this.pacman.x - 1, 3)
-                    this.pacman.x--;
-                    //this.loadPosition();
-                }
-            }
-            if (this.rotation === 180) { // høyre
-                if (this.#isValidMove(1, 0)) {
-                    this.#updateMatrix(this.pacman.y, this.pacman.x, 0)
-                    this.#updateMatrix(this.pacman.y, this.pacman.x + 1, 3)
-                    this.pacman.x++;
-                    //this.loadPosition();
-                }
-            }
-            if (this.rotation === 90) { // opp
-                if (this.#isValidMove(0, -1)) {
-                    this.#updateMatrix(this.pacman.y, this.pacman.x, 0)
-                    this.#updateMatrix(this.pacman.y - 1, this.pacman.x, 3)
-                    this.pacman.y--;
-                    //this.loadPosition();
-                }
-            }
-            if (this.rotation === 270) { // ned
-                if (this.#isValidMove(0, 1)) {
-                    this.#updateMatrix(this.pacman.y, this.pacman.x, 0)
-                    this.#updateMatrix(this.pacman.y + 1, this.pacman.x, 3)
-                    this.pacman.y++;
-                    //this.loadPosition();
-                }
-            } else {
-                return;
+   #movePacman() {
+        if (this.rotation === 0) { // Venstre
+            if (this.#isValidMove(-1, 0)) {
+                this.#updateMatrix(this.pacman.y, this.pacman.x, 0)
+                this.#updateMatrix(this.pacman.y, this.pacman.x - 1, 3)
+                this.pacman.x--;
             }
         }
-        this.loadPosition()
-        setTimeout(this.movePacman(),1000/10)
+        if (this.rotation === 180) { // Høyre
+            if (this.#isValidMove(1, 0)) {
+                this.#updateMatrix(this.pacman.y, this.pacman.x, 0)
+                this.#updateMatrix(this.pacman.y, this.pacman.x + 1, 3)
+                this.pacman.x++;
+            }
+        }
+       if (this.rotation === 90) { // Opp
+           if (this.#isValidMove(0, -1)) {
+               this.#updateMatrix(this.pacman.y, this.pacman.x, 0)
+               this.#updateMatrix(this.pacman.y - 1, this.pacman.x, 3)
+               this.pacman.y--;
+           }
+       }
+       if (this.rotation === 270) { // Ned
+           if (this.#isValidMove(0, 1)) {
+               this.#updateMatrix(this.pacman.y, this.pacman.x, 0)
+               this.#updateMatrix(this.pacman.y + 1, this.pacman.x, 3)
+               this.pacman.y++;
+           }
+       }
+   }
+
+    gameLoop() {
+        if (this.play) {
+            this.#movePacman();
+        }
+        this.loadPosition();
+        setTimeout(this.gameLoop, 1000/this.FPS);
     }
 
     #getCenter(w, h) { // Sentrerer tingen
@@ -234,5 +236,6 @@ const gridMatrix = [
 const gridSystem = new GridSystem(gridMatrix,14, 23);
 gridSystem.render();
 gridSystem.loadPosition();
+gridSystem.gameLoop();
 
 
