@@ -1,7 +1,6 @@
 //TODO Gjør pacman bevegli
 //TODO Gi Spillet en FPS
 //TODO Leg til en fiende
-
 class GridSystem { //TODO fortsette
     //TODO kommentere
     constructor(matrix, pacmanX, pacmanY) {
@@ -13,8 +12,8 @@ class GridSystem { //TODO fortsette
         this.padding = 1;
         this.pacman = {x: pacmanX, y: pacmanY, color: "orange"}
         this.matrix [pacmanY][pacmanX] = 3;
-        this.dir = null;
-        this.speed = 5;
+        //this.speed = 5;
+        //this.timer = 0;
         this.FPS = 5;
         this.rotation = 0;
         this.play = false
@@ -43,7 +42,6 @@ class GridSystem { //TODO fortsette
     }
 
     #rotatePacman = ({keyCode}) =>{
-
         this.play = true;
 
         if (keyCode === 65) { // venstre
@@ -63,7 +61,7 @@ class GridSystem { //TODO fortsette
             console.log("s pressed");
         }
    }
-   #movePacman() {
+   movePacman() {
         if (this.rotation === 0) { // Venstre
             if (this.#isValidMove(-1, 0)) {
                 this.#updateMatrix(this.pacman.y, this.pacman.x, 0)
@@ -94,13 +92,6 @@ class GridSystem { //TODO fortsette
        }
    }
 
-    gameLoop() {
-        if (this.play) {
-            this.#movePacman();
-        }
-        this.loadPosition();
-        setTimeout(this.gameLoop, 1000/this.FPS);
-    }
 
     #getCenter(w, h) { // Sentrerer tingen
         return {
@@ -236,6 +227,12 @@ const gridMatrix = [
 const gridSystem = new GridSystem(gridMatrix,14, 23);
 gridSystem.render();
 gridSystem.loadPosition();
-gridSystem.gameLoop();
-
-
+function gameLoop() {
+    if (gridSystem.play) {
+        gridSystem.movePacman();
+        console.log("looped");
+    }
+    gridSystem.loadPosition();
+    setTimeout(gameLoop, 1000/gridSystem.FPS);
+}
+gameLoop();
