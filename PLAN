@@ -7,6 +7,16 @@
 
 
 
-Sudokode
+Pseudokode
+Du får 3 liv
+Du navigerer labyrinten ved hjelp av piltaster eller wasd
+Om du krasjer i en vegg, må du endre retning
+Ditt mål er å samle alle dottene i labyrinten
+Hver dott gir 10 poeng
+Når du har fått tak i alle, går du videre til neste bane
+Du blir jaget av fiender, som prøver å drepe deg
+Blir du truffet av dem, mister du et liv
+Endelig poengsum får du når du har mistet alle livene dine, og det er om å gjøre å få høyest mulig resultat
+Resultatet ditt blir lagret i en resultatliste som vises på siden – hvis du er god nok 😉
 
 

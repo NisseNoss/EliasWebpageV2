@@ -1,4 +1,4 @@
-//TODO Gjør pacman bevegli
+//TODO Gjør pacman beveglig
 //TODO Gi Spillet en FPS
 //TODO Leg til en fiende
 class GridSystem { //TODO fortsette
@@ -7,6 +7,7 @@ class GridSystem { //TODO fortsette
         this.matrix = matrix;
         this.uiContext = this.#makeCanvas(900, 900, "#000"); //hei
         this.outlineContext = this.#makeCanvas(0, 0, "#000");
+        this.coinContext = this.#makeCanvas(0, 0, "#000", true);
         this.topContext = this.#makeCanvas(0, 0, "#000", true);
         this.cellSize = 24;
         this.padding = 1;
@@ -17,6 +18,8 @@ class GridSystem { //TODO fortsette
         this.FPS = 5;
         this.rotation = 0;
         this.play = false
+        this.dotCount = 0
+        this.score = 0
 
         document.addEventListener("keydown", this.#rotatePacman)
     }
@@ -124,7 +127,7 @@ class GridSystem { //TODO fortsette
         return this.context;
     }
 
-    render() {
+    render() { // Render Maze
         const w = (this.cellSize + this.padding) * this.matrix[0].length - (this.padding)
         const h = (this.cellSize + this.padding) * this.matrix.length - (this.padding)
 
@@ -164,7 +167,31 @@ class GridSystem { //TODO fortsette
         this.uiContext.fillText("Your mother fucker", 20, 30);
     }
 
-    loadPosition() {
+    loadCoins() {
+        const w = (this.cellSize + this.padding) * this.matrix[0].length - (this.padding);
+        const h = (this.cellSize + this.padding) * this.matrix.length - (this.padding);
+
+        this.coinContext.canvas.width = w;
+        this.coinContext.canvas.height = h;
+
+        const center = this.#getCenter(w, h);
+        this.coinContext.canvas.style.marginLeft = center.x;
+        this.coinContext.canvas.style.marginTop = center.y;
+
+        for (let row = 0; row < this.matrix.length; row++) {
+            for (let col = 0; col < this.matrix[row].length; col++) {
+                const cellVal = this.matrix[row][col];
+
+                if (cellVal === 4) {
+                    this.coinContext.drawImage(col * (this.cellSize + this.padding),
+                        row * (this.cellSize + this.padding),
+                        this.cellSize, this.cellSize);
+                }
+            }
+        }
+    }
+
+    loadPosition() { // Renders Pacman and enemies
         const w = (this.cellSize + this.padding) * this.matrix[0].length - (this.padding);
         const h = (this.cellSize + this.padding) * this.matrix.length - (this.padding);
 
@@ -186,7 +213,6 @@ class GridSystem { //TODO fortsette
                         this.cellSize, this.cellSize);
                 }
             }
-
         }
     }
 }
@@ -198,7 +224,7 @@ const gridMatrix = [
     [1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1],
-    [1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1],
+    [1, 0, 1, 1, 1, 1, 0,   1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1],
     [1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1],
     [0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0],
@@ -226,6 +252,7 @@ const gridMatrix = [
 
 const gridSystem = new GridSystem(gridMatrix,14, 23);
 gridSystem.render();
+gridSystem.loadCoins();
 gridSystem.loadPosition();
 function gameLoop() {
     if (gridSystem.play) {
