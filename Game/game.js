@@ -1,8 +1,7 @@
-//TODO Gjør pacman beveglig
-//TODO Gi Spillet en FPS
+//TODO Poeng og dotter
 //TODO Leg til en fiende
 class GridSystem { //TODO fortsette
-    //TODO kommentere
+    //TODO kommentere - Kristoffer
     constructor(matrix, pacmanX, pacmanY) {
         this.matrix = matrix;
         this.uiContext = this.#makeCanvas(900, 900, "#000"); //hei
@@ -254,7 +253,7 @@ const gridSystem = new GridSystem(gridMatrix,14, 23);
 gridSystem.render();
 gridSystem.loadCoins();
 gridSystem.loadPosition();
-function gameLoop() {
+function gameLoop() { // Tatt fra https://github.com/KristianHelland/worm
     if (gridSystem.play) {
         gridSystem.movePacman();
         console.log("looped");
