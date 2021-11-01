@@ -224,7 +224,7 @@ class GridSystem { //TODO fortsette
     }
 }
 
-const gridMatrixBackup = [
+let gridMatrix = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1],
     [1, 4, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 4, 1, 1, 4, 1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 4, 1],
@@ -257,7 +257,7 @@ const gridMatrixBackup = [
     [1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ];
-let gridMatrix = Array.from(gridMatrixBackup)
+const gridMatrixBackup = gridMatrix.concat(); // this no work
 
 let gridSystem;
 gridSystem = new GridSystem(gridMatrix,14, 23);
@@ -268,9 +268,11 @@ function gameLoop() { // Tatt fra https://github.com/KristianHelland/worm
         gridSystem.movePacman();
     }
     if (gridSystem.dotCount === 0) {
-        gridMatrix = Array.from(gridMatrixBackup)
+        gridMatrix.length = 0;
+        gridMatrix = gridMatrixBackup.concat();
         gridSystem = new GridSystem(gridMatrix,14, 23);
         gridSystem.render();
+        gridSystem.loadCoins();
         console.log("Game Over");
     }
     gridSystem.loadCoins();
