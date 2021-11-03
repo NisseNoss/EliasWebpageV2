@@ -304,7 +304,7 @@ function gameLoop() { // Tatt fra https://github.com/KristianHelland/worm
         gridSystem = new GridSystem(gridMatrix,14, 23);
         gridSystem.render();
         gridSystem.loadCoins();
-        console.log("Game Over");
+        console.log(gridSystem.score)
     }
     gridSystem.loadCoins();
     gridSystem.loadPosition();
