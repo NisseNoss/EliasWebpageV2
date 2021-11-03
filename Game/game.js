@@ -12,7 +12,6 @@ class GridSystem { //TODO fortsette
         this.pacman = {x: pacmanX, y: pacmanY, color: "orange"}
         this.matrix [pacmanY][pacmanX] = 3;
         //this.speed = 5;
-        //this.timer = 0;
         this.FPS = 5;
         this.rotation = 0;
         this.play = false
@@ -36,8 +35,9 @@ class GridSystem { //TODO fortsette
             return true;
         }
         else if (this.matrix[this.pacman.y + y][this.pacman.x + x] === 4) {
-            this.score++
-            return true
+            this.score++;
+            time++;
+            return true;
         }
         return false;
     }
@@ -256,7 +256,8 @@ let gridMatrix = [
     [1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ];
-
+let level = 0;
+let time = 100;
 let gridSystem;
 gridSystem = new GridSystem(gridMatrix,14, 23);
 gridSystem.render();
@@ -264,8 +265,11 @@ gridSystem.render();
 function gameLoop() { // Tatt fra https://github.com/KristianHelland/worm
     if (gridSystem.play) {
         gridSystem.movePacman();
+        time = time - 1;
+        console.log(time)
     }
     if (gridSystem.dotCount === 0) {
+        time = 100 - level*10;
         gridMatrix.length = 0;
         gridMatrix = [
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -304,7 +308,14 @@ function gameLoop() { // Tatt fra https://github.com/KristianHelland/worm
         gridSystem.render();
         gridSystem.loadCoins();
         console.log(gridSystem.score);
+        level++;
     }
+    if(time <= 0) {
+        console.log("Game over")
+        console.log(gridSystem.score);
+        return;
+    }
+
     gridSystem.loadCoins();
     gridSystem.loadPosition();
     setTimeout(gameLoop, 1000/gridSystem.FPS);
