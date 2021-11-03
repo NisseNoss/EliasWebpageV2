@@ -1,4 +1,3 @@
-//TODO Poeng og dotter
 //TODO Leg til en fiende
 class GridSystem { //TODO fortsette
     //TODO kommentere - Kristoffer
@@ -304,12 +303,12 @@ function gameLoop() { // Tatt fra https://github.com/KristianHelland/worm
         gridSystem = new GridSystem(gridMatrix,14, 23);
         gridSystem.render();
         gridSystem.loadCoins();
-        console.log(gridSystem.score)
+        console.log(gridSystem.score);
     }
     gridSystem.loadCoins();
     gridSystem.loadPosition();
     setTimeout(gameLoop, 1000/gridSystem.FPS);
 }
 gameLoop();
-console.log(gridSystem.dotCount)
-console.log(gridSystem.score)
+console.log(gridSystem.dotCount);
+console.log(gridSystem.score);
