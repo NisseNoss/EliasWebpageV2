@@ -3,7 +3,7 @@ class GridSystem { //TODO fortsette
     //TODO kommentere - Kristoffer
     constructor(matrix, pacmanX, pacmanY) { //Constructor lager et object som skal ha values "matrix, pacmanX og pacmanY"
         this.matrix = matrix;
-        this.uiContext = this.#makeCanvas(900, 900, "#000"); //hei
+        this.uiContext = this.#makeCanvas(900, 900, "#000"); //
         this.outlineContext = this.#makeCanvas(0, 0, "#000");
         this.coinContext = this.#makeCanvas(0, 0, "#000", true);
         this.topContext = this.#makeCanvas(0, 0, "#000", true);
@@ -269,6 +269,7 @@ function gameLoop() { // Tatt fra https://github.com/KristianHelland/worm
         console.log(time)
     }
     if (gridSystem.dotCount === 0) {
+        level++;
         time = 100 - level*10;
         gridMatrix.length = 0;
         gridMatrix = [
@@ -308,7 +309,6 @@ function gameLoop() { // Tatt fra https://github.com/KristianHelland/worm
         gridSystem.render();
         gridSystem.loadCoins();
         console.log(gridSystem.score);
-        level++;
     }
     if(time <= 0) {
         console.log("Game over")
