@@ -1,7 +1,7 @@
 //TODO Leg til en fiende
 class GridSystem { //TODO fortsette
     //TODO kommentere - Kristoffer
-    constructor(matrix, pacmanX, pacmanY) {
+    constructor(matrix, pacmanX, pacmanY) { //Constructor lager et object som skal ha values "matrix, pacmanX og pacmanY"
         this.matrix = matrix;
         this.uiContext = this.#makeCanvas(900, 900, "#000"); //hei
         this.outlineContext = this.#makeCanvas(0, 0, "#000");
