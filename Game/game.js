@@ -325,13 +325,14 @@ function gameLoop() { // Tatt fra https://github.com/KristianHelland/worm
         gridSystem.uiUpdate(); //Oppdaterer ui en siste gang
         return; //Går ut av gameloopen som betyr at spillet stopper
     }
-    //???
-    gridSystem.loadCoins();
+    //Hvis "if(time <= 0) 
+    //
+    gridSystem.loadCoins(); 
     gridSystem.loadPosition();
     gridSystem.uiUpdate();
     setTimeout(gameLoop, 1000/gridSystem.FPS);
 }
-//???
+//Dette kjøres etter return skjer fra "if(time <= 0) "
 gameLoop();
 console.log(gridSystem.dotCount);
 console.log(score);
