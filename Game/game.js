@@ -1,7 +1,7 @@
 //TODO Leg til en fiende
 class GridSystem { //TODO fortsette
     //TODO kommentere - Kristoffer
-    constructor(matrix, pacmanX, pacmanY) { //Constructor lager et object som skal ha values "matrix, pacmanX og pacmanY"
+    constructor(matrix, pacmanX, pacmanY) { //
         this.matrix = matrix;
         this.uiContext = this.#makeCanvas(900, 900, "#000"); //
         this.outlineContext = this.#makeCanvas(0, 0, "#000");
@@ -229,6 +229,7 @@ class GridSystem { //TODO fortsette
     }
 }
 
+//Setter opp hvordan Matrix gridden skal være
 let gridMatrix = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1],
@@ -262,11 +263,11 @@ let gridMatrix = [
     [1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ];
-let score = 0
-let level = 0;
-let time = 100;
+let score = 0 //Setter start score
+let level = 0; //Setter start level
+let time = 100; //Setter start tiden
 let gridSystem;
-gridSystem = new GridSystem(gridMatrix,14, 23);
+gridSystem = new GridSystem(gridMatrix,14, 23); //Setter start posisjonen til pacman
 gridSystem.render();
 
 function gameLoop() { // Tatt fra https://github.com/KristianHelland/worm
@@ -275,10 +276,11 @@ function gameLoop() { // Tatt fra https://github.com/KristianHelland/worm
         time = time - 1;
         console.log(time)
     }
-    if (gridSystem.dotCount === 0) {
-        level++;
-        time = 100 - level*10;
-        gridMatrix.length = 0;
+    if (gridSystem.dotCount === 0) { //Når tallet på dots i gridden blir til 0, så blir gridden og pacman resatt, men med litt mindre tid for hver gang, til tiden går ut
+        level++; //Øker level med 1
+        time = 100 - level*10; //setter at tiden er 100 minus level gange 10
+        gridMatrix.length = 0; //tømmer gridden
+        //Tegner opp gridden på nytt
         gridMatrix = [
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
             [1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1],
@@ -312,23 +314,24 @@ function gameLoop() { // Tatt fra https://github.com/KristianHelland/worm
             [1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1],
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
         ];
-        gridSystem = new GridSystem(gridMatrix,14, 23);
+        gridSystem = new GridSystem(gridMatrix,14, 23); //Plasserer pacman på start posisjon
         gridSystem.render();
-        console.log(score);
+        console.log(score); //Skriver ut scoren i consolen
     }
-    if(time <= 0) {
+    if(time <= 0) { //Dette skjer når tiden går ut
         //TODO legg til game over screen
-        console.log("Game over");
-        console.log(score);
-        gridSystem.uiUpdate();
-        return;
+        console.log("Game over"); //Logger "game over" i console
+        console.log(score); //Logger så scoren i console
+        gridSystem.uiUpdate(); //Oppdaterer ui en siste gang
+        return; //Går ut av gameloopen som betyr at spillet stopper
     }
-
+    //???
     gridSystem.loadCoins();
     gridSystem.loadPosition();
     gridSystem.uiUpdate();
     setTimeout(gameLoop, 1000/gridSystem.FPS);
 }
+//???
 gameLoop();
 console.log(gridSystem.dotCount);
 console.log(score);
