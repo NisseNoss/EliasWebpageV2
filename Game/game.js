@@ -274,6 +274,7 @@ function gameLoop() { // Tatt fra https://github.com/KristianHelland/worm
         level++; //Øker level med 1
         time = 100 - level*10; //setter at tiden er 100 minus level gange 10
         gridMatrix.length = 0; //tømmer gridden
+        
         //Tegner opp gridden på nytt
         gridMatrix = [
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
