@@ -1,7 +1,7 @@
 //TODO Leg til en fiende
 class GridSystem { //TODO fortsette
     //TODO kommentere - Kristoffer
-    constructor(matrix, pacmanX, pacmanY) { //
+    constructor(matrix, pacmanX, pacmanY) { //Lager mange lag som ligger oppå hverandre for å vise siden og definerer disse.
         this.matrix = matrix;
         this.uiContext = this.#makeCanvas(900, 900, "#000");
         this.outlineContext = this.#makeCanvas(0, 0, "#000");
@@ -16,9 +16,9 @@ class GridSystem { //TODO fortsette
         this.rotation = 0;
         this.play = false;
         this.lost = false;
-        this.dotCount = null;
+        this.dotCount = null; //Setter dotCount til NULL istede for 0, fordi dotCount === 0 vil slutte av programmet lengre nede
 
-        document.addEventListener("keydown", this.#rotatePacman)
+        document.addEventListener("keydown", this.#rotatePacman) //Koden hører alltid etter et innput fra tasturet til brukeren
     }
 
     /*#fps() {
@@ -30,10 +30,10 @@ class GridSystem { //TODO fortsette
         return false;
     }*/
 
-    uiUpdate() {
-        this.uiContext.clearRect(0,0,900,900)
-        this.uiContext.fillText("Score: " + score, 20, 30);
-        this.uiContext.fillText("Time: " + time, 760 , 30);
+    uiUpdate() { //Oppdaterer UI laget der score og tid er vist
+        this.uiContext.clearRect(0,0,900,900) //Sletter vekk alt på laget, slik at ny up-to-date kan bli plassert under.
+        this.uiContext.fillText("Score: " + score, 20, 30); //Skriver opp igjen Score
+        this.uiContext.fillText("Time: " + time, 760 , 30); //Skriver opp igjen Time
 
     }
 
@@ -326,12 +326,11 @@ function gameLoop() { // Tatt fra https://github.com/KristianHelland/worm
         gridSystem.uiUpdate(); //Oppdaterer ui en siste gang
         return; //Går ut av gameloopen som betyr at spillet stopper
     }
-    //Hvis "if(time <= 0) 
-    //
-    gridSystem.loadCoins(); 
-    gridSystem.loadPosition();
-    gridSystem.uiUpdate();
-    setTimeout(gameLoop, 1000/gridSystem.FPS);
+    //Hvis "if(time <= 0)" ikke er sann, så kjøres de neste 4 linjer med kode.
+    gridSystem.loadCoins(); //Loader inn nye coins
+    gridSystem.loadPosition(); //Loader posisjon til pacman på nytt
+    gridSystem.uiUpdate(); //Oppdaterer ui
+    setTimeout(gameLoop, 1000/gridSystem.FPS); //'1000 millisekund delt på 5fps'- sekunders pause før gameloop kjøres igjen.
 }
 //Dette kjøres etter return skjer fra "if(time <= 0) "
 gameLoop();
