@@ -126,7 +126,7 @@ class GridSystem { //TODO fortsette
         const center = this.#getCenter(w, h);
         this.canvas.style.marginLeft = center.x;
         this.canvas.style.marginTop = center.y;
-        document.body.appendChild(this.canvas);
+        document.body.appendChild(this.canvas); //IMPORTANT DO NOT TOUCH
 
         return this.context;
     }
@@ -143,15 +143,9 @@ class GridSystem { //TODO fortsette
         this.outlineContext.canvas.width = w;
         this.outlineContext.canvas.height = h;
 
-        this.topContext.canvas.width = w;
-        this.topContext.canvas.height = h;
-
         const center = this.#getCenter(w, h);
         this.outlineContext.canvas.style.marginTop = center.y;
         this.outlineContext.canvas.style.marginLeft = center.x;
-
-        this.topContext.canvas.style.marginLeft = center.x;
-        this.topContext.canvas.style.marginTop = center.y;
 
         for (let row = 0; row < this.matrix.length; row++) {
             for (let col = 0; col < this.matrix[row].length; col++) {
@@ -173,7 +167,6 @@ class GridSystem { //TODO fortsette
         }
         this.uiContext.font = "20px Courier";
         this.uiContext.fillStyle = "#fff";
-        this.uiContext.fillText(this.score, 20, 30);
     }
 
     loadCoins() {
@@ -198,7 +191,7 @@ class GridSystem { //TODO fortsette
                     this.coinContext.fillStyle = "#ecc400";
                     this.coinContext.fillRect(col * (this.cellSize + this.padding) + 7.5,
                         row * (this.cellSize + this.padding) + 7.5,
-                        this.cellSize-15, this.cellSize-15);
+                        this.cellSize-15, this.cellSize - 15 );
                 }
             }
         }
