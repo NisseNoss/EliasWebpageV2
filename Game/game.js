@@ -14,9 +14,9 @@ class GridSystem { //TODO fortsette
         //this.speed = 5;
         this.FPS = 5;
         this.rotation = 0;
-        this.play = false
+        this.play = false;
+        this.lost = false;
         this.dotCount = null;
-        this.score = 0;
 
         document.addEventListener("keydown", this.#rotatePacman)
     }
@@ -30,12 +30,18 @@ class GridSystem { //TODO fortsette
         return false;
     }*/
 
+    uiUpdate() {
+        this.uiContext.clearRect(0,0,900,900)
+        this.uiContext.fillText("Score: " + score, 20, 30);
+        this.uiContext.fillText("Time: " + time, 760 , 30);
+    }
+
     #isValidMove(x, y) {
         if (this.matrix[this.pacman.y + y][this.pacman.x + x] === 0) {
             return true;
         }
         else if (this.matrix[this.pacman.y + y][this.pacman.x + x] === 4) {
-            this.score++;
+            score = score + 10;
             time++;
             return true;
         }
@@ -166,7 +172,7 @@ class GridSystem { //TODO fortsette
         }
         this.uiContext.font = "20px Courier";
         this.uiContext.fillStyle = "#fff";
-        this.uiContext.fillText("Your mother fucker", 20, 30);
+        this.uiContext.fillText(this.score, 20, 30);
     }
 
     loadCoins() {
@@ -256,6 +262,7 @@ let gridMatrix = [
     [1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ];
+let score = 0
 let level = 0;
 let time = 100;
 let gridSystem;
@@ -307,19 +314,21 @@ function gameLoop() { // Tatt fra https://github.com/KristianHelland/worm
         ];
         gridSystem = new GridSystem(gridMatrix,14, 23);
         gridSystem.render();
-        gridSystem.loadCoins();
-        console.log(gridSystem.score);
+        console.log(score);
     }
     if(time <= 0) {
-        console.log("Game over")
-        console.log(gridSystem.score);
+        //TODO legg til game over screen
+        console.log("Game over");
+        console.log(score);
+        gridSystem.uiUpdate();
         return;
     }
 
     gridSystem.loadCoins();
     gridSystem.loadPosition();
+    gridSystem.uiUpdate();
     setTimeout(gameLoop, 1000/gridSystem.FPS);
 }
 gameLoop();
 console.log(gridSystem.dotCount);
-console.log(gridSystem.score);
+console.log(score);
