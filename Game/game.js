@@ -3,7 +3,7 @@ class GridSystem { //TODO fortsette
     //TODO kommentere - Kristoffer
     constructor(matrix, pacmanX, pacmanY) { //
         this.matrix = matrix;
-        this.uiContext = this.#makeCanvas(900, 900, "#000"); //
+        this.uiContext = this.#makeCanvas(900, 900, "#000");
         this.outlineContext = this.#makeCanvas(0, 0, "#000");
         this.coinContext = this.#makeCanvas(0, 0, "#000", true);
         this.topContext = this.#makeCanvas(0, 0, "#000", true);
@@ -34,6 +34,7 @@ class GridSystem { //TODO fortsette
         this.uiContext.clearRect(0,0,900,900)
         this.uiContext.fillText("Score: " + score, 20, 30);
         this.uiContext.fillText("Time: " + time, 760 , 30);
+
     }
 
     #isValidMove(x, y) {
@@ -267,7 +268,7 @@ let score = 0 //Setter start score
 let level = 0; //Setter start level
 let time = 100; //Setter start tiden
 let gridSystem;
-gridSystem = new GridSystem(gridMatrix,14, 23); //Setter start posisjonen til pacman
+gridSystem = new GridSystem(gridMatrix,14, 23); //Setter start posisjonen til pacman og lager alt du ser og mer
 gridSystem.render();
 
 function gameLoop() { // Tatt fra https://github.com/KristianHelland/worm
@@ -276,7 +277,7 @@ function gameLoop() { // Tatt fra https://github.com/KristianHelland/worm
         time = time - 1;
         console.log(time)
     }
-    if (gridSystem.dotCount === 0) { //Når tallet på dots i gridden blir til 0, så blir gridden og pacman resatt, men med litt mindre tid for hver gang, til tiden går ut
+    if (gridSystem.dotCount === 0) { //Når antall dots i gridden blir lik 0, så blir gridden og pacman resatt, men med litt mindre tid for hver gang, til tiden går ut
         level++; //Øker level med 1
         time = 100 - level*10; //setter at tiden er 100 minus level gange 10
         gridMatrix.length = 0; //tømmer gridden
@@ -325,13 +326,12 @@ function gameLoop() { // Tatt fra https://github.com/KristianHelland/worm
         gridSystem.uiUpdate(); //Oppdaterer ui en siste gang
         return; //Går ut av gameloopen som betyr at spillet stopper
     }
-    //???
+    //Loader disse tingene alltid
     gridSystem.loadCoins();
     gridSystem.loadPosition();
     gridSystem.uiUpdate();
     setTimeout(gameLoop, 1000/gridSystem.FPS);
 }
-//???
-gameLoop();
+gameLoop(); // starter loopen
 console.log(gridSystem.dotCount);
 console.log(score);
