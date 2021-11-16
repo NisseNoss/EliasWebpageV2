@@ -10,7 +10,7 @@ class GridSystem { //TODO fortsette
         //maze størelse
         this.cellSize = 24;
         this.padding = 1;
-        //pacman
+        //Pacman
         this.pacman = {x: pacmanX, y: pacmanY, color: "orange"}
         this.matrix [pacmanY][pacmanX] = 3;
         this.rotation = 0;
@@ -19,6 +19,9 @@ class GridSystem { //TODO fortsette
         this.blinky = {x: blinkyX, y: blinkyY, color: "red"};
         this.matrix [blinkyY][blinkyX] = 5;
         this.rotationB = 0;
+        this.thing1 = this.blinky.x - this.pacman.x
+        this.thing2 = this.blinky.y - this.pacman.y
+        this.svar = Math.sqrt(this.thing1 * this.thing1 + this.thing2 * this.thing2)
 
         //game variabler
         this.FPS = 5;
@@ -81,6 +84,21 @@ class GridSystem { //TODO fortsette
             console.log("s pressed");
         }
    }
+
+   isValidBlinky(/*Ghost, */x, y) {
+        if (this.matrix[this.blinky.y + y][this.blinky.x + x] === 0 || 4) {
+        return true;
+        }
+   }
+
+   findDir() {
+        if (this.rotationB === 0) {
+            if (this.isValidBlinky(/*this.blinky, */-1, 0)) {
+
+            }
+        }
+   }
+
     movePacman() {
         if (this.rotation === 0) { // Venstre
             if (this.#isValidMove(-1, 0)) {
