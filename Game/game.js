@@ -54,9 +54,6 @@ class GridSystem { //TODO fortsette
             //time++;
             return true;
         }
-        else if (this.matrix[this.pacman.y + y][this.pacman.x + x] === 5) {
-            return true
-        }
         return false;
     }
 
@@ -512,6 +509,7 @@ let gridMatrix = [
     [1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ];
+let lives = 3
 let score = 0 //Setter start score
 let level = 0; //Setter start level
 //let time = 100; //Setter start tiden
@@ -565,16 +563,21 @@ function gameLoop() { // Tatt fra https://github.com/KristianHelland/worm
             [1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1],
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
         ];
-        gridSystem = new GridSystem(gridMatrix,14, 23, 14, 15); //Plasserer pacman på start posisjon
+        gridSystem = new GridSystem(gridMatrix,14, 23, 13, 11); //Plasserer pacman på start posisjon
         gridSystem.render();
         console.log(score); //Skriver ut scoren i consolen
     }
     if(gridSystem.matrix[gridSystem.pacman.y][gridSystem.pacman.x] === gridSystem.matrix[gridSystem.blinky.y][gridSystem.blinky.x]) { //Dette skjer når tiden går ut
         //TODO legg til game over screen
-        console.log("Game over"); //Logger "game over" i console
-        console.log(score); //Logger så scoren i console
-        gridSystem.uiUpdate(); //Oppdaterer ui en siste gang
-        return; //Går ut av gameloopen som betyr at spillet stopper
+        lives--
+        gridSystem = new GridSystem(gridMatrix,14, 23, 13, 11); //Plasserer pacman på start posisjon
+
+        if (lives === 0) {
+            console.log("Game over"); //Logger "game over" i console
+            console.log(score); //Logger så scoren i console
+            gridSystem.uiUpdate(); //Oppdaterer ui en siste gang
+            return; //Går ut av gameloopen som betyr at spillet stopper
+        }
     }
     //Hvis "if(time <= 0)" ikke er sann, så kjøres de neste 4 linjer med kode.
     gridSystem.loadCoins(); //Loader inn nye coins
