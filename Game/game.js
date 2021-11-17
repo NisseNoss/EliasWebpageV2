@@ -127,7 +127,7 @@ class GridSystem { //TODO fortsette
                    this.key = i;
                }
            }
-           console.log(this.key);
+           //console.log("Opp"+this.key);
            if (this.key === "svar1") { // opp
                this.rotationB = 90
            }
@@ -142,14 +142,10 @@ class GridSystem { //TODO fortsette
            if (this.isValidBlinky(0, -1)) { // Sjekker Opp
                this.makeValueBlinky(0, -1);
                this.svar1 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
-           } else {
-               this.svar1 = null;
            }
            if (this.isValidBlinky(1, 0)) { //Sjekker høyre
                this.makeValueBlinky(1, 0);
                this.svar2 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
-           } else {
-               this.svar2 = null;
            }
            if (this.isValidBlinky(0, 1)) {  //Sjekker ned
                this.makeValueBlinky(0, 1);
@@ -162,7 +158,7 @@ class GridSystem { //TODO fortsette
                    this.key = i;
                }
            }
-           console.log(this.key);
+           //console.log("Høyre "+this.key);
            if (this.key === "svar1") {
                this.rotationB = 90
            }
@@ -193,7 +189,7 @@ class GridSystem { //TODO fortsette
                    this.key = i;
                }
            }
-           console.log(this.key);
+           //console.log("Ned"+this.key);
            if (this.key === "svar1") {
                this.rotationB = 180
            }
@@ -224,14 +220,14 @@ class GridSystem { //TODO fortsette
                    this.key = i;
                }
            }
-           console.log(this.key);
+           //console.log("Venstre"+this.key);
            if (this.key === "svar1") {
                this.rotationB = 90
            }
-           if (this.key === "svar2") {
+           else if (this.key === "svar2") {
                this.rotationB = 270
            }
-           if (this.key === "svar3") {
+           else if (this.key === "svar3") {
                this.rotationB = 0
            }
        }
@@ -249,9 +245,8 @@ class GridSystem { //TODO fortsette
     }*/
 
     moveBlinky() {
-        this.findDirB()
         if (this.rotationB === 0) { // Venstre
-            console.log("Venstre")
+            //console.log("Venstre")
             if (this.isValidBlinky(-1, 0)) {
                 this.#updateMatrix(this.blinky.y, this.blinky.x, 0)
                 this.#updateMatrix(this.blinky.y, this.blinky.x - 1, 5)
@@ -260,7 +255,7 @@ class GridSystem { //TODO fortsette
             }
         }
         if (this.rotationB === 180) { // Høyre
-            console.log("Høyre")
+            //console.log("Høyre")
             if (this.isValidBlinky(1, 0)) {
                 this.#updateMatrix(this.blinky.y, this.blinky.x, 0)
                 this.#updateMatrix(this.blinky.y, this.blinky.x + 1, 5)
@@ -269,7 +264,7 @@ class GridSystem { //TODO fortsette
             }
         }
         if (this.rotationB === 90) { // Opp
-            console.log("Opp")
+            //console.log("Opp")
             if (this.isValidBlinky(0, -1)) {
                 this.#updateMatrix(this.blinky.y, this.blinky.x, 0)
                 this.#updateMatrix(this.blinky.y - 1, this.blinky.x, 5)
@@ -278,7 +273,7 @@ class GridSystem { //TODO fortsette
             }
         }
         if (this.rotationB === 270) { // Ned
-            console.log("Ned")
+            //console.log("Ned")
             if (this.isValidBlinky(0, 1)) {
                 this.#updateMatrix(this.blinky.y, this.blinky.x, 0)
                 this.#updateMatrix(this.blinky.y + 1, this.blinky.x, 5)
@@ -286,6 +281,7 @@ class GridSystem { //TODO fortsette
 
             }
         }
+        this.findDirB()
     }
 
 
