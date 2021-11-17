@@ -89,9 +89,6 @@ class GridSystem { //TODO fortsette
        else if (this.matrix[this.blinky.y + y][this.blinky.x + x] === 4) {
            return true;
        }
-       else if (this.matrix[this.blinky.y + y][this.blinky.x + x] === 3) {
-           return true;
-       }
        return false;
    }
 
