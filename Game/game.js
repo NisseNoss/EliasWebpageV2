@@ -39,8 +39,12 @@ class GridSystem { //TODO fortsette
     }*/
 
     uiUpdate() { //Oppdaterer UI laget der score og tid er vist
-        this.uiContext.clearRect(0,0,900,900) //Sletter vekk alt på laget, slik at ny up-to-date kan bli plassert under.
+        this.uiContext.clearRect(0,0,850,850) //Sletter vekk alt på laget, slik at ny up-to-date kan bli plassert under.
         this.uiContext.fillText("Score: " + score, 20, 30); //Skriver opp igjen Score
+        this.uiContext.fillText("Lives: " + (lives+1), 740, 30);
+        if (lives === -1) {
+            this.uiContext.fillText("Game Over!", 369, 30);
+        }
 
     }
 
