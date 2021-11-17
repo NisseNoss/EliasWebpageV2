@@ -83,9 +83,16 @@ class GridSystem { //TODO fortsette
    }
 
    isValidBlinky(x, y) {
-        if (this.matrix[this.blinky.y + y][this.blinky.x + x] === 0 || 4) {
-        return true;
-        }
+       if (this.matrix[this.blinky.y + y][this.blinky.x + x] === 0) {
+           return true;
+       }
+       else if (this.matrix[this.blinky.y + y][this.blinky.x + x] === 4) {
+           return true;
+       }
+       else if (this.matrix[this.blinky.y + y][this.blinky.x + x] === 3) {
+           return true;
+       }
+       return false;
    }
 
    makeValueBlinky(x, y) {
@@ -93,33 +100,47 @@ class GridSystem { //TODO fortsette
        this.bPosY = this.blinky.y + y - this.pacman.y;
    }
 
-   findLogic() {
-       if (this.rotation === 90) {//Opp
-           if (this.isValidBlinky(0, 1)) { // Sjekker Opp
-               this.makeValueBlinky(0, 1);
+   findDirB() {
+       this.svar1 = 100;
+       this.svar2 = 100;
+       this.svar3 = 100;
+       if (this.rotationB === 90) {//Opp
+           if (this.isValidBlinky(0, -1)) { // Sjekker Opp
+               this.makeValueBlinky(0, -1);
                this.svar1 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
-           } else {
-               this.svar1 = null;
            }
 
            if (this.isValidBlinky(1, 0)) { // Sjekker høyre
                this.makeValueBlinky(1, 0);
                this.svar2 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
-           } else {
-               this.svar2 = null;
            }
 
            if (this.isValidBlinky(-1, 0)) { // Sjekker venstre
                this.makeValueBlinky(-1, 0);
                this.svar3 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
-           } else {
-               this.svar3 = null;
            }
-           return [this.svar1, this.svar2, this.svar3];
+
+           this.value = {svar1: this.svar1, svar2: this.svar2, svar3: this.svar3}, this.min = Infinity, this.key;
+           for (let i in this.value) {
+               if (this.value[i] < this.min) {
+                   this.min = this.value[i]
+                   this.key = i;
+               }
+           }
+           console.log(this.key);
+           if (this.key === "svar1") { // opp
+               this.rotationB = 90
+           }
+           if (this.key === "svar2") { // Høyre
+               this.rotationB = 180
+           }
+           if (this.key === "svar3") { // Venstre
+               this.rotationB = 0
+           }
        }
-       if (this.rotation === 180) {//høyre
-           if (this.isValidBlinky(0, 1)) { // Sjekker Opp
-               this.makeValueBlinky(0, 1);
+       if (this.rotationB === 180) {//høyre
+           if (this.isValidBlinky(0, -1)) { // Sjekker Opp
+               this.makeValueBlinky(0, -1);
                this.svar1 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
            } else {
                this.svar1 = null;
@@ -130,59 +151,93 @@ class GridSystem { //TODO fortsette
            } else {
                this.svar2 = null;
            }
-           if (this.isValidBlinky(0, -1)) {  //Sjekker ned
-               this.makeValueBlinky(0, -1);
+           if (this.isValidBlinky(0, 1)) {  //Sjekker ned
+               this.makeValueBlinky(0, 1);
                this.svar3 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
-           } else {
-               this.svar3 = null;
            }
-           return [this.svar1, this.svar2, this.svar3];
+           this.value = {svar1: this.svar1, svar2: this.svar2, svar3: this.svar3}, this.min = Infinity, this.key;
+           for (let i in this.value) {
+               if (this.value[i] < this.min) {
+                   this.min = this.value[i]
+                   this.key = i;
+               }
+           }
+           console.log(this.key);
+           if (this.key === "svar1") {
+               this.rotationB = 90
+           }
+           if (this.key === "svar2") {
+               this.rotationB = 180
+           }
+           if (this.key === "svar3") {
+               this.rotationB = 270
+           }
        }
-       if (this.rotation === 270) {//ned
+       if (this.rotationB === 270) {//ned
            if (this.isValidBlinky(1, 0)) {
                this.makeValueBlinky(1, 0); //Sjekker høyre
                this.svar1 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
-           } else {
-               this.svar1 = null;
            }
-           if (this.isValidBlinky(0, -1)) {  //Sjekker ned
-               this.makeValueBlinky(0, -1);
-               this.svar2 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
-           } else {
-               this.svar2 = null;
-           }
-           if (this.isValidBlinky(-1, 0)) { // Sjekker venstre
-               this.makeValueBlinky(-1, 0);
-               this.svar3 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
-           } else {
-               this.svar3 = null;
-           }
-           return [this.svar1, this.svar2, this.svar3];
-       }
-       if (this.rotation === 0) {//venstre
-           if (this.isValidBlinky(0, 1)) { // Sjekker Opp
+           if (this.isValidBlinky(0, 1)) {  //Sjekker ned
                this.makeValueBlinky(0, 1);
-               this.svar1 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
-           } else {
-               this.svar1 = null;
-           }
-           if (this.isValidBlinky(0, -1)) {  //Sjekker ned
-               this.makeValueBlinky(0, -1);
                this.svar2 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
-           } else {
-               this.svar2 = null;
            }
            if (this.isValidBlinky(-1, 0)) { // Sjekker venstre
                this.makeValueBlinky(-1, 0);
                this.svar3 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
-           } else {
-               this.svar3 = null;
            }
-           return [this.svar1, this.svar2, this.svar3];
+           this.value = {svar1: this.svar1, svar2: this.svar2, svar3: this.svar3}, this.min = Infinity, this.key;
+           for (let i in this.value) {
+               if (this.value[i] < this.min) {
+                   this.min = this.value[i]
+                   this.key = i;
+               }
+           }
+           console.log(this.key);
+           if (this.key === "svar1") {
+               this.rotationB = 180
+           }
+           if (this.key === "svar2") {
+               this.rotationB = 270
+           }
+           if (this.key === "svar3") {
+               this.rotationB = 0
+           }
+       }
+       if (this.rotationB === 0) {//venstre
+           if (this.isValidBlinky(0, -1)) { // Sjekker Opp
+               this.makeValueBlinky(0, -1);
+               this.svar1 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
+           }
+           if (this.isValidBlinky(0, 1)) {  //Sjekker ned
+               this.makeValueBlinky(0, 1);
+               this.svar2 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
+           }
+           if (this.isValidBlinky(-1, 0)) { // Sjekker venstre
+               this.makeValueBlinky(-1, 0);
+               this.svar3 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
+           }
+           this.value = {svar1: this.svar1, svar2: this.svar2, svar3: this.svar3}, this.min = Infinity, this.key;
+           for (let i in this.value) {
+               if (this.value[i] < this.min) {
+                   this.min = this.value[i]
+                   this.key = i;
+               }
+           }
+           console.log(this.key);
+           if (this.key === "svar1") {
+               this.rotationB = 90
+           }
+           if (this.key === "svar2") {
+               this.rotationB = 270
+           }
+           if (this.key === "svar3") {
+               this.rotationB = 0
+           }
        }
     }
 
-    findDir() {
+    /*findDir() {
         this.value = this.findLogic(), this.min = Infinity, this.key;
         for (let i in this.value) {
             if (this.value[i] < this.min) {
@@ -190,7 +245,49 @@ class GridSystem { //TODO fortsette
                 this.key = i;
             }
         }
+        console.log(this.key)
+    }*/
+
+    moveBlinky() {
+        this.findDirB()
+        if (this.rotationB === 0) { // Venstre
+            console.log("Venstre")
+            if (this.isValidBlinky(-1, 0)) {
+                this.#updateMatrix(this.blinky.y, this.blinky.x, 0)
+                this.#updateMatrix(this.blinky.y, this.blinky.x - 1, 5)
+                this.blinky.x--;
+
+            }
+        }
+        if (this.rotationB === 180) { // Høyre
+            console.log("Høyre")
+            if (this.isValidBlinky(1, 0)) {
+                this.#updateMatrix(this.blinky.y, this.blinky.x, 0)
+                this.#updateMatrix(this.blinky.y, this.blinky.x + 1, 5)
+                this.blinky.x++;
+
+            }
+        }
+        if (this.rotationB === 90) { // Opp
+            console.log("Opp")
+            if (this.isValidBlinky(0, -1)) {
+                this.#updateMatrix(this.blinky.y, this.blinky.x, 0)
+                this.#updateMatrix(this.blinky.y - 1, this.blinky.x, 5)
+                this.blinky.y--;
+
+            }
+        }
+        if (this.rotationB === 270) { // Ned
+            console.log("Ned")
+            if (this.isValidBlinky(0, 1)) {
+                this.#updateMatrix(this.blinky.y, this.blinky.x, 0)
+                this.#updateMatrix(this.blinky.y + 1, this.blinky.x, 5)
+                this.blinky.y++;
+
+            }
+        }
     }
+
 
     movePacman() {
         if (this.rotation === 0) { // Venstre
@@ -390,12 +487,13 @@ let score = 0 //Setter start score
 let level = 0; //Setter start level
 let time = 100; //Setter start tiden
 let gridSystem;
-gridSystem = new GridSystem(gridMatrix,14, 23, 14, 15); //Setter start posisjonen til pacman og lager alt du ser og mer
+gridSystem = new GridSystem(gridMatrix,14, 23, 13, 11); //Setter start posisjonen til pacman og lager alt du ser og mer
 gridSystem.render();
 
 function gameLoop() { // Tatt fra https://github.com/KristianHelland/worm
     if (gridSystem.play) {
         gridSystem.movePacman();
+        gridSystem.moveBlinky();
         time = time - 1;
         //console.log(time)
     }
