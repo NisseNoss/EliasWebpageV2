@@ -24,7 +24,6 @@ class GridSystem { //TODO fortsette
         //game variabler
         this.FPS = 5;
         this.play = false;
-        this.lost = false;
         this.dotCount = null; //Setter dotCount til NULL istede for 0, fordi dotCount === 0 vil slutte av programmet lengre nede
 
         document.addEventListener("keydown", this.#rotatePacman) //Koden hører alltid etter et innput fra tasturet til brukeren
@@ -509,7 +508,7 @@ let gridMatrix = [
     [1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ];
-let lives = 3
+let lives = 2
 let score = 0 //Setter start score
 let level = 0; //Setter start level
 //let time = 100; //Setter start tiden
@@ -576,9 +575,9 @@ function gameLoop() { // Tatt fra https://github.com/KristianHelland/worm
             return; //Går ut av gameloopen som betyr at spillet stopper
         }
         lives--
-        gridSystem = new GridSystem(gridMatrix,14, 23, 13, 11); //Plasserer pacman på start posisjon
         gridSystem.updateMatrix(gridSystem.pacman.y, gridSystem.pacman.x, 0)
         gridSystem.updateMatrix(gridSystem.blinky.y, gridSystem.blinky.x, 0)
+        gridSystem = new GridSystem(gridMatrix,14, 23, 13, 11); //Plasserer pacman på start posisjon
         gridSystem.render();
 
     }
