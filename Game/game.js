@@ -93,58 +93,104 @@ class GridSystem { //TODO fortsette
        this.bPosY = this.blinky.y + y - this.pacman.y;
    }
 
-   findDir() {
-        if (this.rotation === 90) {//Opp
-            if (this.isValidBlinky(0, 1)) { // Sjekker Opp
-                this.makeValueBlinky(0, 1);
-                this.svar1 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
-            }
-            if (this.isValidBlinky(1, 0)) {
-                this.makeValueBlinky(1, 0);
-                this.svar2 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY); //Sjekker høyre
-            }
-            if (this.isValidBlinky(-1, 0)) {
-                this.makeValueBlinky(-1, 0);
-                this.svar3 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY); //Sjekker venstre
+   findLogic() {
+       if (this.rotation === 90) {//Opp
+           if (this.isValidBlinky(0, 1)) { // Sjekker Opp
+               this.makeValueBlinky(0, 1);
+               this.svar1 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
+           } else {
+               this.svar1 = null;
+           }
+
+           if (this.isValidBlinky(1, 0)) { // Sjekker høyre
+               this.makeValueBlinky(1, 0);
+               this.svar2 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
+           } else {
+               this.svar2 = null;
+           }
+
+           if (this.isValidBlinky(-1, 0)) { // Sjekker venstre
+               this.makeValueBlinky(-1, 0);
+               this.svar3 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
+           } else {
+               this.svar3 = null;
+           }
+           return [this.svar1, this.svar2, this.svar3];
+       }
+       if (this.rotation === 180) {//høyre
+           if (this.isValidBlinky(0, 1)) { // Sjekker Opp
+               this.makeValueBlinky(0, 1);
+               this.svar1 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
+           } else {
+               this.svar1 = null;
+           }
+           if (this.isValidBlinky(1, 0)) { //Sjekker høyre
+               this.makeValueBlinky(1, 0);
+               this.svar2 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
+           } else {
+               this.svar2 = null;
+           }
+           if (this.isValidBlinky(0, -1)) {  //Sjekker ned
+               this.makeValueBlinky(0, -1);
+               this.svar3 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
+           } else {
+               this.svar3 = null;
+           }
+           return [this.svar1, this.svar2, this.svar3];
+       }
+       if (this.rotation === 270) {//ned
+           if (this.isValidBlinky(1, 0)) {
+               this.makeValueBlinky(1, 0); //Sjekker høyre
+               this.svar1 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
+           } else {
+               this.svar1 = null;
+           }
+           if (this.isValidBlinky(0, -1)) {  //Sjekker ned
+               this.makeValueBlinky(0, -1);
+               this.svar2 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
+           } else {
+               this.svar2 = null;
+           }
+           if (this.isValidBlinky(-1, 0)) { // Sjekker venstre
+               this.makeValueBlinky(-1, 0);
+               this.svar3 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
+           } else {
+               this.svar3 = null;
+           }
+           return [this.svar1, this.svar2, this.svar3];
+       }
+       if (this.rotation === 0) {//venstre
+           if (this.isValidBlinky(0, 1)) { // Sjekker Opp
+               this.makeValueBlinky(0, 1);
+               this.svar1 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
+           } else {
+               this.svar1 = null;
+           }
+           if (this.isValidBlinky(0, -1)) {  //Sjekker ned
+               this.makeValueBlinky(0, -1);
+               this.svar2 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
+           } else {
+               this.svar2 = null;
+           }
+           if (this.isValidBlinky(-1, 0)) { // Sjekker venstre
+               this.makeValueBlinky(-1, 0);
+               this.svar3 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
+           } else {
+               this.svar3 = null;
+           }
+           return [this.svar1, this.svar2, this.svar3];
+       }
+    }
+
+    findDir() {
+        this.value = this.findLogic(), this.min = Infinity, this.key;
+        for (let i in this.value) {
+            if (this.value[i] < this.min) {
+                this.min = this.value[i]
+                this.key = i;
             }
         }
-       if (this.rotation === 180) {
-           if (this.isValidBlinky(1, 0)) { // Sjekker høyre
-               this.makeValueBlinky(0, 1);
-               this.svar1 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY); // Sjekker opp
-
-               this.makeValueBlinky(1, 0);
-               this.svar2 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY); // Sjekker høyre
-
-               this.makeValueBlinky(0, -1);
-               this.svar3 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY); // Sjekker ned
-           }
-       }
-       if (this.rotation === 270) {
-           if (this.isValidBlinky(1, 0)) { // Sjekker ned
-               this.makeValueBlinky(0, 1);
-               this.svar1 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY); // Sjekker opp
-
-               this.makeValueBlinky(1, 0);
-               this.svar2 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY); // Sjekker høyre
-
-               this.makeValueBlinky(0, -1);
-               this.svar3 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY); // Sjekker ned
-           }
-       }
-       if (this.rotation === 0) {
-           if (this.isValidBlinky(1, 0)) { // Sjekker Venstre
-               this.makeValueBlinky(0, 1);
-               this.svar1 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY); // Sjekker opp
-
-               this.makeValueBlinky(1, 0);
-               this.svar2 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY); // Sjekker høyre
-
-               this.makeValueBlinky(0, -1);
-               this.svar3 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY); // Sjekker ned
-           }
-       }
-   }
+    }
 
     movePacman() {
         if (this.rotation === 0) { // Venstre
