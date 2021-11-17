@@ -19,9 +19,6 @@ class GridSystem { //TODO fortsette
         this.blinky = {x: blinkyX, y: blinkyY, color: "red"};
         this.matrix [blinkyY][blinkyX] = 5;
         this.rotationB = 0;
-        this.thing1 = this.blinky.x - this.pacman.x
-        this.thing2 = this.blinky.y - this.pacman.y
-        this.svar = Math.sqrt(this.thing1 * this.thing1 + this.thing2 * this.thing2)
 
         //game variabler
         this.FPS = 5;
@@ -85,18 +82,68 @@ class GridSystem { //TODO fortsette
         }
    }
 
-   isValidBlinky(/*Ghost, */x, y) {
+   isValidBlinky(x, y) {
         if (this.matrix[this.blinky.y + y][this.blinky.x + x] === 0 || 4) {
         return true;
         }
    }
 
-   findDir() {
-        if (this.rotationB === 0) {
-            if (this.isValidBlinky(/*this.blinky, */-1, 0)) {
+   makeValueBlinky(x, y) {
+       this.bPosX = this.blinky.x + x - this.pacman.x;
+       this.bPosY = this.blinky.y + y - this.pacman.y;
+   }
 
+   findDir() {
+        if (this.rotation === 90) {//Opp
+            if (this.isValidBlinky(0, 1)) { // Sjekker Opp
+                this.makeValueBlinky(0, 1);
+                this.svar1 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
+            }
+            if (this.isValidBlinky(1, 0)) {
+                this.makeValueBlinky(1, 0);
+                this.svar2 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY); //Sjekker høyre
+            }
+            if (this.isValidBlinky(-1, 0)) {
+                this.makeValueBlinky(-1, 0);
+                this.svar3 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY); //Sjekker venstre
             }
         }
+       if (this.rotation === 180) {
+           if (this.isValidBlinky(1, 0)) { // Sjekker høyre
+               this.makeValueBlinky(0, 1);
+               this.svar1 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY); // Sjekker opp
+
+               this.makeValueBlinky(1, 0);
+               this.svar2 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY); // Sjekker høyre
+
+               this.makeValueBlinky(0, -1);
+               this.svar3 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY); // Sjekker ned
+           }
+       }
+       if (this.rotation === 270) {
+           if (this.isValidBlinky(1, 0)) { // Sjekker ned
+               this.makeValueBlinky(0, 1);
+               this.svar1 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY); // Sjekker opp
+
+               this.makeValueBlinky(1, 0);
+               this.svar2 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY); // Sjekker høyre
+
+               this.makeValueBlinky(0, -1);
+               this.svar3 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY); // Sjekker ned
+           }
+       }
+       if (this.rotation === 0) {
+           if (this.isValidBlinky(1, 0)) { // Sjekker Venstre
+               this.makeValueBlinky(0, 1);
+               this.svar1 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY); // Sjekker opp
+
+               this.makeValueBlinky(1, 0);
+               this.svar2 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY); // Sjekker høyre
+
+               this.makeValueBlinky(0, -1);
+               this.svar3 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY); // Sjekker ned
+           }
+       }
    }
 
     movePacman() {
@@ -169,7 +216,7 @@ class GridSystem { //TODO fortsette
         this.outlineContext.canvas.width = w;
         this.outlineContext.canvas.height = h;
 
-        const center = this.#getCenter(w, h);
+        const center = this.#getCenter(w, h); //TODO Finn ut av dette i 17/11
         this.outlineContext.canvas.style.marginTop = center.y;
         this.outlineContext.canvas.style.marginLeft = center.x;
 
@@ -237,19 +284,18 @@ class GridSystem { //TODO fortsette
         for (let row = 0; row < this.matrix.length; row++) {
             for (let col = 0; col < this.matrix[row].length; col++) {
                 const cellVal = this.matrix[row][col];
-                this.loadcolor = null;
+
+                this.topContext.globalCompositeOperation = 'destination-out';
 
                 if (cellVal === 3) {
-                    this.topContext.globalCompositeOperation = "copy";
                     this.loadcolor = this.pacman.color;
+                    this.topContext.globalCompositeOperation = "source-over";
                 }
                 if (cellVal === 5) {
-                    this.topContext.globalCompositeOperation = "copy";
+                    this.topContext.globalCompositeOperation = "source-over";
                     this.loadcolor = this.blinky.color;
                 }
-                else {
-                    this.topContext.globalCompositeOperation = 'destination-out';
-                }
+
                 this.topContext.fillStyle = this.loadcolor;
                 this.topContext.fillRect(col * (this.cellSize + this.padding),
                     row * (this.cellSize + this.padding),
@@ -305,7 +351,7 @@ function gameLoop() { // Tatt fra https://github.com/KristianHelland/worm
     if (gridSystem.play) {
         gridSystem.movePacman();
         time = time - 1;
-        console.log(time)
+        //console.log(time)
     }
     if (gridSystem.dotCount === 0) { //Når antall dots i gridden blir lik 0, så blir gridden og pacman resatt, men med litt mindre tid for hver gang, til tiden går ut
         level++; //Øker level med 1
