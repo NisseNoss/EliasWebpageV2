@@ -19,11 +19,11 @@ class GridSystem { //TODO fortsette
         this.blinky = {x: blinkyX, y: blinkyY, color: "red"};
         this.matrix [blinkyY][blinkyX] = 5;
         this.rotationB = 0;
-        this.bTile = 0;
 
         //game variabler
         this.FPS = 5;
         this.play = false;
+        this.lost = false;
         this.dotCount = null; //Setter dotCount til NULL istede for 0, fordi dotCount === 0 vil slutte av programmet lengre nede
 
         document.addEventListener("keydown", this.#rotatePacman) //Koden hører alltid etter et innput fra tasturet til brukeren
@@ -39,12 +39,9 @@ class GridSystem { //TODO fortsette
     }*/
 
     uiUpdate() { //Oppdaterer UI laget der score og tid er vist
-        this.uiContext.clearRect(0,0,850,850) //Sletter vekk alt på laget, slik at ny up-to-date kan bli plassert under.
+        this.uiContext.clearRect(0,0,900,900) //Sletter vekk alt på laget, slik at ny up-to-date kan bli plassert under.
         this.uiContext.fillText("Score: " + score, 20, 30); //Skriver opp igjen Score
-        this.uiContext.fillText("Lives: " + (lives+1), 740, 30);
-        if (lives === -1) {
-            this.uiContext.fillText("Game Over!", 369, 30);
-        }
+        this.uiContext.fillText("Time: " + time, 720 , 30); //Skriver opp igjen Time
 
     }
 
@@ -54,13 +51,13 @@ class GridSystem { //TODO fortsette
         }
         else if (this.matrix[this.pacman.y + y][this.pacman.x + x] === 4) {
             score = score + 10;
-            //time++;
+            time++;
             return true;
         }
         return false;
     }
 
-    updateMatrix(y, x, val) {
+    #updateMatrix(y, x, val) {
         this.matrix[y][x] = val;
     }
 
@@ -93,7 +90,7 @@ class GridSystem { //TODO fortsette
            return true;
        }
        else if (this.matrix[this.blinky.y + y][this.blinky.x + x] === 3) {
-           return true
+           return true;
        }
        return false;
    }
@@ -130,23 +127,18 @@ class GridSystem { //TODO fortsette
                    this.key = i;
                }
            }
-          //console.log("Opp"+this.key);
+           //console.log("Opp"+this.key);
            if (this.key === "svar1") { // opp
                this.rotationB = 90
            }
-           else if (this.key === "svar2") { // Høyre
+           if (this.key === "svar2") { // Høyre
                this.rotationB = 180
            }
-           else if (this.key === "svar3") { // Venstre
+           if (this.key === "svar3") { // Venstre
                this.rotationB = 0
            }
-           if (this.svar1 === 100 && this.svar2 === 100) {
-               if (this.svar1 === 100 && this.svar3 === 100){
-                   this.rotationB = 90
-               }
-           }
        }
-       else if(this.rotationB === 180) {//høyre
+       if (this.rotationB === 180) {//høyre
            if (this.isValidBlinky(0, -1)) { // Sjekker Opp
                this.makeValueBlinky(0, -1);
                this.svar1 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
@@ -170,19 +162,14 @@ class GridSystem { //TODO fortsette
            if (this.key === "svar1") {
                this.rotationB = 90
            }
-           else if (this.key === "svar2") {
+           if (this.key === "svar2") {
                this.rotationB = 180
            }
-           else if (this.key === "svar3") {
+           if (this.key === "svar3") {
                this.rotationB = 270
            }
-           if (this.svar1 === 100 && this.svar2 === 100) {
-               if (this.svar1 === 100 && this.svar3 === 100){
-                   this.rotationB = 180
-               }
-           }
        }
-       else if (this.rotationB === 270) {//ned
+       if (this.rotationB === 270) {//ned
            if (this.isValidBlinky(1, 0)) {
                this.makeValueBlinky(1, 0); //Sjekker høyre
                this.svar1 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
@@ -202,23 +189,18 @@ class GridSystem { //TODO fortsette
                    this.key = i;
                }
            }
-           //console.log("Ned" +this.key);
+           //console.log("Ned"+this.key);
            if (this.key === "svar1") {
                this.rotationB = 180
            }
-           else if (this.key === "svar2") {
+           if (this.key === "svar2") {
                this.rotationB = 270
            }
-           else if (this.key === "svar3") {
+           if (this.key === "svar3") {
                this.rotationB = 0
            }
-           if (this.svar1 === 100 && this.svar2 === 100) {
-               if (this.svar1 === 100 && this.svar3 === 100){
-                   this.rotationB = 270
-               }
-           }
        }
-       else if (this.rotationB === 0) {//venstre
+       if (this.rotationB === 0) {//venstre
            if (this.isValidBlinky(0, -1)) { // Sjekker Opp
                this.makeValueBlinky(0, -1);
                this.svar1 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
@@ -238,7 +220,7 @@ class GridSystem { //TODO fortsette
                    this.key = i;
                }
            }
-           //console.log("Venstre "+this.key);
+           //console.log("Venstre"+this.key);
            if (this.key === "svar1") {
                this.rotationB = 90
            }
@@ -247,11 +229,6 @@ class GridSystem { //TODO fortsette
            }
            else if (this.key === "svar3") {
                this.rotationB = 0
-           }
-           if (this.svar1 === 100 && this.svar2 === 100) {
-               if (this.svar1 === 100 && this.svar3 === 100){
-                   this.rotationB = 0
-               }
            }
        }
     }
@@ -268,38 +245,29 @@ class GridSystem { //TODO fortsette
     }*/
 
     moveBlinky() {
-        this.findDirB()
         if (this.rotationB === 0) { // Venstre
             //console.log("Venstre")
             if (this.isValidBlinky(-1, 0)) {
-
-                this.updateMatrix(this.blinky.y, this.blinky.x, this.bTile);
-                this.bTile = this.matrix[this.blinky.y][this.blinky.x - 1];
-                this.updateMatrix(this.blinky.y, this.blinky.x - 1, 5);
+                this.#updateMatrix(this.blinky.y, this.blinky.x, 0)
+                this.#updateMatrix(this.blinky.y, this.blinky.x - 1, 5)
                 this.blinky.x--;
 
             }
-
         }
         if (this.rotationB === 180) { // Høyre
             //console.log("Høyre")
             if (this.isValidBlinky(1, 0)) {
-
-                this.updateMatrix(this.blinky.y, this.blinky.x, this.bTile)
-                this.bTile = this.matrix[this.blinky.y][this.blinky.x + 1]
-                this.updateMatrix(this.blinky.y, this.blinky.x + 1, 5)
+                this.#updateMatrix(this.blinky.y, this.blinky.x, 0)
+                this.#updateMatrix(this.blinky.y, this.blinky.x + 1, 5)
                 this.blinky.x++;
 
             }
-
         }
         if (this.rotationB === 90) { // Opp
             //console.log("Opp")
             if (this.isValidBlinky(0, -1)) {
-
-                this.updateMatrix(this.blinky.y, this.blinky.x, this.bTile)
-                this.bTile = this.matrix[this.blinky.y - 1][this.blinky.x]
-                this.updateMatrix(this.blinky.y - 1, this.blinky.x, 5)
+                this.#updateMatrix(this.blinky.y, this.blinky.x, 0)
+                this.#updateMatrix(this.blinky.y - 1, this.blinky.x, 5)
                 this.blinky.y--;
 
             }
@@ -307,43 +275,42 @@ class GridSystem { //TODO fortsette
         if (this.rotationB === 270) { // Ned
             //console.log("Ned")
             if (this.isValidBlinky(0, 1)) {
-
-                this.updateMatrix(this.blinky.y, this.blinky.x, this.bTile)
-                this.bTile = this.matrix[this.blinky.y + 1][this.blinky.x]
-                this.updateMatrix(this.blinky.y + 1, this.blinky.x, 5)
+                this.#updateMatrix(this.blinky.y, this.blinky.x, 0)
+                this.#updateMatrix(this.blinky.y + 1, this.blinky.x, 5)
                 this.blinky.y++;
 
             }
         }
+        this.findDirB()
     }
 
 
     movePacman() {
         if (this.rotation === 0) { // Venstre
             if (this.#isValidMove(-1, 0)) {
-                this.updateMatrix(this.pacman.y, this.pacman.x, 0)
-                this.updateMatrix(this.pacman.y, this.pacman.x - 1, 3)
+                this.#updateMatrix(this.pacman.y, this.pacman.x, 0)
+                this.#updateMatrix(this.pacman.y, this.pacman.x - 1, 3)
                 this.pacman.x--;
             }
         }
         if (this.rotation === 180) { // Høyre
             if (this.#isValidMove(1, 0)) {
-                this.updateMatrix(this.pacman.y, this.pacman.x, 0)
-                this.updateMatrix(this.pacman.y, this.pacman.x + 1, 3)
+                this.#updateMatrix(this.pacman.y, this.pacman.x, 0)
+                this.#updateMatrix(this.pacman.y, this.pacman.x + 1, 3)
                 this.pacman.x++;
             }
         }
        if (this.rotation === 90) { // Opp
            if (this.#isValidMove(0, -1)) {
-               this.updateMatrix(this.pacman.y, this.pacman.x, 0)
-               this.updateMatrix(this.pacman.y - 1, this.pacman.x, 3)
+               this.#updateMatrix(this.pacman.y, this.pacman.x, 0)
+               this.#updateMatrix(this.pacman.y - 1, this.pacman.x, 3)
                this.pacman.y--;
            }
        }
        if (this.rotation === 270) { // Ned
            if (this.#isValidMove(0, 1)) {
-               this.updateMatrix(this.pacman.y, this.pacman.x, 0)
-               this.updateMatrix(this.pacman.y + 1, this.pacman.x, 3)
+               this.#updateMatrix(this.pacman.y, this.pacman.x, 0)
+               this.#updateMatrix(this.pacman.y + 1, this.pacman.x, 3)
                this.pacman.y++;
            }
        }
@@ -512,10 +479,9 @@ let gridMatrix = [
     [1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ];
-let lives = 2
 let score = 0 //Setter start score
 let level = 0; //Setter start level
-//let time = 100; //Setter start tiden
+let time = 100; //Setter start tiden
 let gridSystem;
 gridSystem = new GridSystem(gridMatrix,14, 23, 13, 11); //Setter start posisjonen til pacman og lager alt du ser og mer
 gridSystem.render();
@@ -524,12 +490,12 @@ function gameLoop() { // Tatt fra https://github.com/KristianHelland/worm
     if (gridSystem.play) {
         gridSystem.movePacman();
         gridSystem.moveBlinky();
-        //time = time - 1;
+        time = time - 1;
         //console.log(time)
     }
     if (gridSystem.dotCount === 0) { //Når antall dots i gridden blir lik 0, så blir gridden og pacman resatt, men med litt mindre tid for hver gang, til tiden går ut
         level++; //Øker level med 1
-        //time = 100 - level*10; //setter at tiden er 100 minus level gange 10
+        time = 100 - level*10; //setter at tiden er 100 minus level gange 10
         gridMatrix.length = 0; //tømmer gridden
         
         //Tegner opp gridden på nytt
@@ -566,24 +532,16 @@ function gameLoop() { // Tatt fra https://github.com/KristianHelland/worm
             [1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1],
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
         ];
-        gridSystem = new GridSystem(gridMatrix,14, 23, 13, 11); //Plasserer pacman på start posisjon
+        gridSystem = new GridSystem(gridMatrix,14, 23, 14, 15); //Plasserer pacman på start posisjon
         gridSystem.render();
         console.log(score); //Skriver ut scoren i consolen
     }
-    if(gridSystem.matrix[gridSystem.pacman.y][gridSystem.pacman.x] === gridSystem.matrix[gridSystem.blinky.y][gridSystem.blinky.x]) { //Dette skjer når tiden går ut
+    if(time <= 0) { //Dette skjer når tiden går ut
         //TODO legg til game over screen
-        if (lives === 0) {
-            console.log("Game over"); //Logger "game over" i console
-            console.log(score); //Logger så scoren i console
-            gridSystem.uiUpdate(); //Oppdaterer ui en siste gang
-            return; //Går ut av gameloopen som betyr at spillet stopper
-        }
-        lives--
-        gridSystem.updateMatrix(gridSystem.pacman.y, gridSystem.pacman.x, 0)
-        gridSystem.updateMatrix(gridSystem.blinky.y, gridSystem.blinky.x, 0)
-        gridSystem = new GridSystem(gridMatrix,14, 23, 13, 11); //Plasserer pacman på start posisjon
-        gridSystem.render();
-
+        console.log("Game over"); //Logger "game over" i console
+        console.log(score); //Logger så scoren i console
+        gridSystem.uiUpdate(); //Oppdaterer ui en siste gang
+        return; //Går ut av gameloopen som betyr at spillet stopper
     }
     //Hvis "if(time <= 0)" ikke er sann, så kjøres de neste 4 linjer med kode.
     gridSystem.loadCoins(); //Loader inn nye coins
