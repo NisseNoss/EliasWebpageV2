@@ -42,218 +42,218 @@ class GridSystem { //TODO fortsette
         this.uiContext.clearRect(0,0,850,850) //Sletter vekk alt på laget, slik at ny up-to-date kan bli plassert under.
         this.uiContext.fillText("Score: " + score, 20, 30); //Skriver opp igjen Score
         this.uiContext.fillText("Lives: " + (lives+1), 740, 30);
-        if (lives === -1) {
+        if (lives === -1) { //Dersom du går tom for liv, så vises game over skjermen
             this.uiContext.fillText("Game Over!", 369, 30);
         }
 
     }
 
-    #isValidMove(x, y) {
-        if (this.matrix[this.pacman.y + y][this.pacman.x + x] === 0) {
+    #isValidMove(x, y) { //Sjekker om pacman kan bevege seg i valgt rettning
+        if (this.matrix[this.pacman.y + y][this.pacman.x + x] === 0) { //Flytter dersom neste posisjon er tom
             return true;
         }
-        else if (this.matrix[this.pacman.y + y][this.pacman.x + x] === 4) {
-            score = score + 10;
+        else if (this.matrix[this.pacman.y + y][this.pacman.x + x] === 4) { //Flytter dersom neste posisjon er en coin
+            score = score + 10; //Pacman har plukket opp en coin og score øker med 10
             //time++;
             return true;
         }
         return false;
     }
 
-    updateMatrix(y, x, val) {
+    updateMatrix(y, x, val) { //Oppdaterer posisjonene i matrixen
         this.matrix[y][x] = val;
     }
 
     #rotatePacman = ({keyCode}) =>{
         this.play = true;
 
-        if (keyCode === 65) { // venstre
+        if (keyCode === 65) { // Flytter venstre når "A" blir trykket
             this.rotation = 0;
             console.log("a pressed");
         }
-        else if (keyCode === 68) { // høyre
+        else if (keyCode === 68) { // Flytter høyre når "D" blir trykket
             this.rotation = 180;
             console.log("d pressed");
         }
-        else if (keyCode === 87) { // opp
+        else if (keyCode === 87) { // Flytter oppover når "W" blir trykket
             this.rotation = 90;
             console.log("w pressed");
         }
-        else if (keyCode === 83) { // ned
+        else if (keyCode === 83) { // Flytter nedover når "S" blir trykket
             this.rotation = 270;
             console.log("s pressed");
         }
-   }
+    }
 
-   isValidBlinky(x, y) {
-       if (this.matrix[this.blinky.y + y][this.blinky.x + x] === 0) {
-           return true;
-       }
-       else if (this.matrix[this.blinky.y + y][this.blinky.x + x] === 4) {
-           return true;
-       }
-       else if (this.matrix[this.blinky.y + y][this.blinky.x + x] === 3) {
-           return true
-       }
-       return false;
-   }
+    isValidBlinky(x, y) { //Sjekker om Blinky kan bevege seg i valgt rettning
+        if (this.matrix[this.blinky.y + y][this.blinky.x + x] === 0) { //Flytter dersom neste posisjon er tom
+            return true;
+        }
+        else if (this.matrix[this.blinky.y + y][this.blinky.x + x] === 4) { //Flytter dersom neste posisjon er en coin
+            return true;
+        }
+        else if (this.matrix[this.blinky.y + y][this.blinky.x + x] === 3) { //Flytter dersom neste posisjon er pacman
+            return true
+        }
+        return false;
+    }
 
-   makeValueBlinky(x, y) {
-       this.bPosX = this.blinky.x + x - this.pacman.x;
-       this.bPosY = this.blinky.y + y - this.pacman.y;
-   }
+    makeValueBlinky(x, y) {
+        this.bPosX = this.blinky.x + x - this.pacman.x;
+        this.bPosY = this.blinky.y + y - this.pacman.y;
+    }
+//????????????????????!!!???????!!?!?!?!!?!?!?!?!!?????????????????????!!!!!!???????!!?!?!?!!?!?!?!?!!
+    findDirB() {
+        this.svar1 = 100;
+        this.svar2 = 100;
+        this.svar3 = 100;
+        if (this.rotationB === 90) {//Opp
+            if (this.isValidBlinky(0, -1)) { // Sjekker Opp
+                this.makeValueBlinky(0, -1);
+                this.svar1 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
+            }
 
-   findDirB() {
-       this.svar1 = 100;
-       this.svar2 = 100;
-       this.svar3 = 100;
-       if (this.rotationB === 90) {//Opp
-           if (this.isValidBlinky(0, -1)) { // Sjekker Opp
-               this.makeValueBlinky(0, -1);
-               this.svar1 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
-           }
+            if (this.isValidBlinky(1, 0)) { // Sjekker høyre
+                this.makeValueBlinky(1, 0);
+                this.svar2 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
+            }
 
-           if (this.isValidBlinky(1, 0)) { // Sjekker høyre
-               this.makeValueBlinky(1, 0);
-               this.svar2 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
-           }
+            if (this.isValidBlinky(-1, 0)) { // Sjekker venstre
+                this.makeValueBlinky(-1, 0);
+                this.svar3 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
+            }
 
-           if (this.isValidBlinky(-1, 0)) { // Sjekker venstre
-               this.makeValueBlinky(-1, 0);
-               this.svar3 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
-           }
-
-           this.value = {svar1: this.svar1, svar2: this.svar2, svar3: this.svar3}, this.min = Infinity, this.key;
-           for (let i in this.value) {
-               if (this.value[i] < this.min) {
-                   this.min = this.value[i]
-                   this.key = i;
-               }
-           }
-          //console.log("Opp"+this.key);
-           if (this.key === "svar1") { // opp
-               this.rotationB = 90
-           }
-           else if (this.key === "svar2") { // Høyre
-               this.rotationB = 180
-           }
-           else if (this.key === "svar3") { // Venstre
-               this.rotationB = 0
-           }
-           if (this.svar1 === 100 && this.svar2 === 100) {
-               if (this.svar1 === 100 && this.svar3 === 100){
-                   this.rotationB = 90
-               }
-           }
-       }
-       else if(this.rotationB === 180) {//høyre
-           if (this.isValidBlinky(0, -1)) { // Sjekker Opp
-               this.makeValueBlinky(0, -1);
-               this.svar1 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
-           }
-           if (this.isValidBlinky(1, 0)) { //Sjekker høyre
-               this.makeValueBlinky(1, 0);
-               this.svar2 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
-           }
-           if (this.isValidBlinky(0, 1)) {  //Sjekker ned
-               this.makeValueBlinky(0, 1);
-               this.svar3 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
-           }
-           this.value = {svar1: this.svar1, svar2: this.svar2, svar3: this.svar3}, this.min = Infinity, this.key;
-           for (let i in this.value) {
-               if (this.value[i] < this.min) {
-                   this.min = this.value[i]
-                   this.key = i;
-               }
-           }
-           //console.log("Høyre "+this.key);
-           if (this.key === "svar1") {
-               this.rotationB = 90
-           }
-           else if (this.key === "svar2") {
-               this.rotationB = 180
-           }
-           else if (this.key === "svar3") {
-               this.rotationB = 270
-           }
-           if (this.svar1 === 100 && this.svar2 === 100) {
-               if (this.svar1 === 100 && this.svar3 === 100){
-                   this.rotationB = 180
-               }
-           }
-       }
-       else if (this.rotationB === 270) {//ned
-           if (this.isValidBlinky(1, 0)) {
-               this.makeValueBlinky(1, 0); //Sjekker høyre
-               this.svar1 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
-           }
-           if (this.isValidBlinky(0, 1)) {  //Sjekker ned
-               this.makeValueBlinky(0, 1);
-               this.svar2 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
-           }
-           if (this.isValidBlinky(-1, 0)) { // Sjekker venstre
-               this.makeValueBlinky(-1, 0);
-               this.svar3 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
-           }
-           this.value = {svar1: this.svar1, svar2: this.svar2, svar3: this.svar3}, this.min = Infinity, this.key;
-           for (let i in this.value) {
-               if (this.value[i] < this.min) {
-                   this.min = this.value[i]
-                   this.key = i;
-               }
-           }
-           //console.log("Ned" +this.key);
-           if (this.key === "svar1") {
-               this.rotationB = 180
-           }
-           else if (this.key === "svar2") {
-               this.rotationB = 270
-           }
-           else if (this.key === "svar3") {
-               this.rotationB = 0
-           }
-           if (this.svar1 === 100 && this.svar2 === 100) {
-               if (this.svar1 === 100 && this.svar3 === 100){
-                   this.rotationB = 270
-               }
-           }
-       }
-       else if (this.rotationB === 0) {//venstre
-           if (this.isValidBlinky(0, -1)) { // Sjekker Opp
-               this.makeValueBlinky(0, -1);
-               this.svar1 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
-           }
-           if (this.isValidBlinky(0, 1)) {  //Sjekker ned
-               this.makeValueBlinky(0, 1);
-               this.svar2 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
-           }
-           if (this.isValidBlinky(-1, 0)) { // Sjekker venstre
-               this.makeValueBlinky(-1, 0);
-               this.svar3 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
-           }
-           this.value = {svar1: this.svar1, svar2: this.svar2, svar3: this.svar3}, this.min = Infinity, this.key;
-           for (let i in this.value) {
-               if (this.value[i] < this.min) {
-                   this.min = this.value[i]
-                   this.key = i;
-               }
-           }
-           //console.log("Venstre "+this.key);
-           if (this.key === "svar1") {
-               this.rotationB = 90
-           }
-           else if (this.key === "svar2") {
-               this.rotationB = 270
-           }
-           else if (this.key === "svar3") {
-               this.rotationB = 0
-           }
-           if (this.svar1 === 100 && this.svar2 === 100) {
-               if (this.svar1 === 100 && this.svar3 === 100){
-                   this.rotationB = 0
-               }
-           }
-       }
+            this.value = {svar1: this.svar1, svar2: this.svar2, svar3: this.svar3}, this.min = Infinity, this.key;
+            for (let i in this.value) {
+                if (this.value[i] < this.min) {
+                    this.min = this.value[i]
+                    this.key = i;
+                }
+            }
+            //console.log("Opp"+this.key);
+            if (this.key === "svar1") { // opp
+                this.rotationB = 90
+            }
+            else if (this.key === "svar2") { // Høyre
+                this.rotationB = 180
+            }
+            else if (this.key === "svar3") { // Venstre
+                this.rotationB = 0
+            }
+            if (this.svar1 === 100 && this.svar2 === 100) {
+                if (this.svar1 === 100 && this.svar3 === 100){
+                    this.rotationB = 90
+                }
+            }
+        }
+        else if(this.rotationB === 180) {//høyre
+            if (this.isValidBlinky(0, -1)) { // Sjekker Opp
+                this.makeValueBlinky(0, -1);
+                this.svar1 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
+            }
+            if (this.isValidBlinky(1, 0)) { //Sjekker høyre
+                this.makeValueBlinky(1, 0);
+                this.svar2 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
+            }
+            if (this.isValidBlinky(0, 1)) {  //Sjekker ned
+                this.makeValueBlinky(0, 1);
+                this.svar3 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
+            }
+            this.value = {svar1: this.svar1, svar2: this.svar2, svar3: this.svar3}, this.min = Infinity, this.key;
+            for (let i in this.value) {
+                if (this.value[i] < this.min) {
+                    this.min = this.value[i]
+                    this.key = i;
+                }
+            }
+            //console.log("Høyre "+this.key);
+            if (this.key === "svar1") {
+                this.rotationB = 90
+            }
+            else if (this.key === "svar2") {
+                this.rotationB = 180
+            }
+            else if (this.key === "svar3") {
+                this.rotationB = 270
+            }
+            if (this.svar1 === 100 && this.svar2 === 100) {
+                if (this.svar1 === 100 && this.svar3 === 100){
+                    this.rotationB = 180
+                }
+            }
+        }
+        else if (this.rotationB === 270) {//ned
+            if (this.isValidBlinky(1, 0)) {
+                this.makeValueBlinky(1, 0); //Sjekker høyre
+                this.svar1 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
+            }
+            if (this.isValidBlinky(0, 1)) {  //Sjekker ned
+                this.makeValueBlinky(0, 1);
+                this.svar2 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
+            }
+            if (this.isValidBlinky(-1, 0)) { // Sjekker venstre
+                this.makeValueBlinky(-1, 0);
+                this.svar3 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
+            }
+            this.value = {svar1: this.svar1, svar2: this.svar2, svar3: this.svar3}, this.min = Infinity, this.key;
+            for (let i in this.value) {
+                if (this.value[i] < this.min) {
+                    this.min = this.value[i]
+                    this.key = i;
+                }
+            }
+            //console.log("Ned" +this.key);
+            if (this.key === "svar1") {
+                this.rotationB = 180
+            }
+            else if (this.key === "svar2") {
+                this.rotationB = 270
+            }
+            else if (this.key === "svar3") {
+                this.rotationB = 0
+            }
+            if (this.svar1 === 100 && this.svar2 === 100) {
+                if (this.svar1 === 100 && this.svar3 === 100){
+                    this.rotationB = 270
+                }
+            }
+        }
+        else if (this.rotationB === 0) {//venstre
+            if (this.isValidBlinky(0, -1)) { // Sjekker Opp
+                this.makeValueBlinky(0, -1);
+                this.svar1 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
+            }
+            if (this.isValidBlinky(0, 1)) {  //Sjekker ned
+                this.makeValueBlinky(0, 1);
+                this.svar2 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
+            }
+            if (this.isValidBlinky(-1, 0)) { // Sjekker venstre
+                this.makeValueBlinky(-1, 0);
+                this.svar3 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
+            }
+            this.value = {svar1: this.svar1, svar2: this.svar2, svar3: this.svar3}, this.min = Infinity, this.key;
+            for (let i in this.value) {
+                if (this.value[i] < this.min) {
+                    this.min = this.value[i]
+                    this.key = i;
+                }
+            }
+            //console.log("Venstre "+this.key);
+            if (this.key === "svar1") {
+                this.rotationB = 90
+            }
+            else if (this.key === "svar2") {
+                this.rotationB = 270
+            }
+            else if (this.key === "svar3") {
+                this.rotationB = 0
+            }
+            if (this.svar1 === 100 && this.svar2 === 100) {
+                if (this.svar1 === 100 && this.svar3 === 100){
+                    this.rotationB = 0
+                }
+            }
+        }
     }
 
     /*findDir() {
@@ -318,46 +318,46 @@ class GridSystem { //TODO fortsette
     }
 
 
-    movePacman() {
-        if (this.rotation === 0) { // Venstre
+    movePacman() { //Sjekker om rotasjon kan føre til et gyldig flytt med #isValidMove
+        if (this.rotation === 0) { // Sjekker venstre rotasjon
             if (this.#isValidMove(-1, 0)) {
                 this.updateMatrix(this.pacman.y, this.pacman.x, 0)
                 this.updateMatrix(this.pacman.y, this.pacman.x - 1, 3)
-                this.pacman.x--;
+                this.pacman.x--; //Dersom flyttet er gyldig, flyttes pacman en gang mot venstre i matrixen
             }
         }
-        if (this.rotation === 180) { // Høyre
+        if (this.rotation === 180) { // Sjekker høyre rotasjon
             if (this.#isValidMove(1, 0)) {
                 this.updateMatrix(this.pacman.y, this.pacman.x, 0)
                 this.updateMatrix(this.pacman.y, this.pacman.x + 1, 3)
-                this.pacman.x++;
+                this.pacman.x++; //Dersom flyttet er gyldig, flyttes pacman en gang mot høyre i matrixen
             }
         }
-       if (this.rotation === 90) { // Opp
-           if (this.#isValidMove(0, -1)) {
-               this.updateMatrix(this.pacman.y, this.pacman.x, 0)
-               this.updateMatrix(this.pacman.y - 1, this.pacman.x, 3)
-               this.pacman.y--;
-           }
-       }
-       if (this.rotation === 270) { // Ned
-           if (this.#isValidMove(0, 1)) {
-               this.updateMatrix(this.pacman.y, this.pacman.x, 0)
-               this.updateMatrix(this.pacman.y + 1, this.pacman.x, 3)
-               this.pacman.y++;
-           }
-       }
+        if (this.rotation === 90) { // Sjekker oppover rotasjon
+            if (this.#isValidMove(0, -1)) {
+                this.updateMatrix(this.pacman.y, this.pacman.x, 0)
+                this.updateMatrix(this.pacman.y - 1, this.pacman.x, 3)
+                this.pacman.y--; //Dersom flyttet er gyldig, flyttes pacman en gang mot oppover i matrixen
+            }
+        }
+        if (this.rotation === 270) { // Sjekker nedover rotasjon
+            if (this.#isValidMove(0, 1)) {
+                this.updateMatrix(this.pacman.y, this.pacman.x, 0)
+                this.updateMatrix(this.pacman.y + 1, this.pacman.x, 3)
+                this.pacman.y++; //Dersom flyttet er gyldig, flyttes pacman en gang mot nedover i matrixen
+            }
+        }
     }
 
 
-    #getCenter(w, h) { // Sentrerer tingen
+    #getCenter(w, h) { // Sentrerer banen etter skjermstørrelse
         return {
             x: window.innerWidth / 2 - w / 2 + "px",
             y: window.innerHeight / 2 - h / 2 - 20 + "px"
         };
     }
 
-    #makeCanvas(w, h, color = "#111", isTransparent = false) {
+    #makeCanvas(w, h, color = "#111", isTransparent = false) { //Hvordan canvas skal se ut og posisjoneres
         this.canvas = document.createElement("canvas");
         this.context = this.#getContext()
         //this.context = this.canvas.getContext("2d");
@@ -371,11 +371,11 @@ class GridSystem { //TODO fortsette
         const center = this.#getCenter(w, h);
         this.canvas.style.marginLeft = center.x;
         this.canvas.style.marginTop = center.y;
-        document.body.appendChild(this.canvas); //IMPORTANT DO NOT TOUCH
+        document.body.appendChild(this.canvas); //CRITICAL. AVOID ALTERATION
 
         return this.context;
     }
-    
+
     #getContext() {
         this.context = this.canvas.getContext("2d");
         return this.context;
@@ -392,7 +392,7 @@ class GridSystem { //TODO fortsette
         this.outlineContext.canvas.style.marginTop = center.y;
         this.outlineContext.canvas.style.marginLeft = center.x;
 
-        for (let row = 0; row < this.matrix.length; row++) {
+        for (let row = 0; row < this.matrix.length; row++) { //Renderer mazen grid firkant for grid firkant fra venstre til høyre, neste row, repeat
             for (let col = 0; col < this.matrix[row].length; col++) {
                 const cellVal = this.matrix[row][col];
                 let color = "#111";
@@ -512,13 +512,34 @@ let gridMatrix = [
     [1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ];
-let lives = 2
-let score = 0 //Setter start score
+let highscore = 0;
+
+let lives = 2;
+let score = 0; //Setter start score
 let level = 0; //Setter start level
 //let time = 100; //Setter start tiden
 let gridSystem;
 gridSystem = new GridSystem(gridMatrix,14, 23, 13, 11); //Setter start posisjonen til pacman og lager alt du ser og mer
 gridSystem.render();
+
+function sendHighScore() {
+    $("#p1").val(name);
+    $("#p2").val(highscore);
+    $("#p3").val("send");
+    $("#f1").submit();
+}
+
+//Updates the highscore
+function updatehighscore() {
+    if (score > highscore) {
+        highscore = score;
+        localStorage['highscore'] = score
+        hschange = 1;
+        document.getElementById("highscore-output").innerHTML = score;
+    }
+    //console.log(highscore)
+}
+
 
 function gameLoop() { // Tatt fra https://github.com/KristianHelland/worm
     if (gridSystem.play) {
@@ -531,7 +552,7 @@ function gameLoop() { // Tatt fra https://github.com/KristianHelland/worm
         level++; //Øker level med 1
         //time = 100 - level*10; //setter at tiden er 100 minus level gange 10
         gridMatrix.length = 0; //tømmer gridden
-        
+
         //Tegner opp gridden på nytt
         gridMatrix = [
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
