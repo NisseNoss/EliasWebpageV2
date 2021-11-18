@@ -41,9 +41,11 @@ class GridSystem { //TODO fortsette
     uiUpdate() { //Oppdaterer UI laget der score og tid er vist
         this.uiContext.clearRect(0,0,850,850) //Sletter vekk alt på laget, slik at ny up-to-date kan bli plassert under.
         this.uiContext.fillText("Score: " + score, 20, 30); //Skriver opp igjen Score
-        this.uiContext.fillText("Lives: " + (lives+1), 740, 30);
-        if (lives === -1) { //Dersom du går tom for liv, så vises game over skjermen
+        this.uiContext.fillText("Lives: " + lives, 740, 30);
+        if (lives === 0) { //Dersom du går tom for liv, så vises game over skjermen
             this.uiContext.fillText("Game Over!", 369, 30);
+        } else {
+            this.uiContext.fillText("Level " + (level+1), 390, 30);
         }
 
     }
@@ -514,7 +516,7 @@ let gridMatrix = [
 ];
 let highscore = 0;
 
-let lives = 2;
+let lives = 3;
 let score = 0; //Setter start score
 let level = 0; //Setter start level
 //let time = 100; //Setter start tiden
@@ -593,13 +595,14 @@ function gameLoop() { // Tatt fra https://github.com/KristianHelland/worm
     }
     if(gridSystem.matrix[gridSystem.pacman.y][gridSystem.pacman.x] === gridSystem.matrix[gridSystem.blinky.y][gridSystem.blinky.x]) { //Dette skjer når tiden går ut
         //TODO legg til game over screen
+        lives--
         if (lives === 0) {
             console.log("Game over"); //Logger "game over" i console
             console.log(score); //Logger så scoren i console
             gridSystem.uiUpdate(); //Oppdaterer ui en siste gang
             return; //Går ut av gameloopen som betyr at spillet stopper
         }
-        lives--
+
         gridSystem.updateMatrix(gridSystem.pacman.y, gridSystem.pacman.x, 0)
         gridSystem.updateMatrix(gridSystem.blinky.y, gridSystem.blinky.x, 0)
         gridSystem = new GridSystem(gridMatrix,14, 23, 13, 11); //Plasserer pacman på start posisjon
