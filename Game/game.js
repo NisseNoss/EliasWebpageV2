@@ -105,7 +105,7 @@ class GridSystem { //TODO fortsette
     }
 
     findDirB() {
-        //Ghost logic
+        // Ghost logic
         // Spøkelsene skal sjekke hvilken vei som er kortest å gå for å komme seg til pacman. De skjekker bare veier som er lov å gå.
         // De kan ikke sjekke bak seg eller snu 180 rundt
         this.svar1 = 100; // hvis en retning kan bli sjekket må vi ha en verdi som er for høy til å påvirke
