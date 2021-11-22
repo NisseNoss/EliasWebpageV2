@@ -1,4 +1,3 @@
-//TODO Leg til en fiende
 class GridSystem { //TODO fortsette
     //TODO kommentere - Kristoffer
     constructor(matrix, pacmanX, pacmanY, blinkyX, blinkyY) { //Lager mange lag som ligger oppå hverandre for å vise siden og definerer disse.
@@ -69,19 +68,19 @@ class GridSystem { //TODO fortsette
     #rotatePacman = ({keyCode}) =>{
         this.play = true;
 
-        if (keyCode === 65) { // Flytter venstre når "A" blir trykket
+        if (keyCode === 65 || keyCode === 37) { // Flytter venstre når "A" blir trykket
             this.rotation = 0;
             console.log("a pressed");
         }
-        else if (keyCode === 68) { // Flytter høyre når "D" blir trykket
+        else if (keyCode === 68 ||keyCode === 39) { // Flytter høyre når "D" blir trykket
             this.rotation = 180;
             console.log("d pressed");
         }
-        else if (keyCode === 87) { // Flytter oppover når "W" blir trykket
+        else if (keyCode === 87 ||keyCode === 38) { // Flytter oppover når "W" blir trykket
             this.rotation = 90;
             console.log("w pressed");
         }
-        else if (keyCode === 83) { // Flytter nedover når "S" blir trykket
+        else if (keyCode === 83 ||keyCode === 40) { // Flytter nedover når "S" blir trykket
             this.rotation = 270;
             console.log("s pressed");
         }
@@ -97,42 +96,46 @@ class GridSystem { //TODO fortsette
         else if (this.matrix[this.blinky.y + y][this.blinky.x + x] === 3) { //Flytter dersom neste posisjon er pacman
             return true
         }
-        return false;
+        return false; // Hvis ingen av if påstandene er sanne returner vi false
     }
 
-    makeValueBlinky(x, y) {
-        this.bPosX = this.blinky.x + x - this.pacman.x;
-        this.bPosY = this.blinky.y + y - this.pacman.y;
+    makeValueBlinky(x, y) { // Vi bruker pytagoras' læresetning for å finne den korteste avstanden
+        this.bPosX = this.blinky.x + x - this.pacman.x; // Side a
+        this.bPosY = this.blinky.y + y - this.pacman.y; // side b
     }
-//????????????????????!!!???????!!?!?!?!!?!?!?!?!!?????????????????????!!!!!!???????!!?!?!?!!?!?!?!?!!
+
     findDirB() {
-        this.svar1 = 100;
+        //Ghost logic
+        // Spøkelsene skal sjekke hvilken vei som er kortest å gå for å komme seg til pacman. De skjekker bare veier som er lov å gå.
+        // De kan ikke sjekke bak seg eller snu 180 rundt
+        this.svar1 = 100; // hvis en retning kan bli sjekket må vi ha en verdi som er for høy til å påvirke
         this.svar2 = 100;
         this.svar3 = 100;
         if (this.rotationB === 90) {//Opp
             if (this.isValidBlinky(0, -1)) { // Sjekker Opp
                 this.makeValueBlinky(0, -1);
-                this.svar1 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
+                this.svar1 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY); // gir avstanden til pacmen og spøkelse i luft linje
             }
 
             if (this.isValidBlinky(1, 0)) { // Sjekker høyre
                 this.makeValueBlinky(1, 0);
-                this.svar2 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
+                this.svar2 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY); // --||--
             }
 
             if (this.isValidBlinky(-1, 0)) { // Sjekker venstre
                 this.makeValueBlinky(-1, 0);
-                this.svar3 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
+                this.svar3 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY); // --||--
             }
-
+            // Her finner vi laveste verdien
             this.value = {svar1: this.svar1, svar2: this.svar2, svar3: this.svar3}, this.min = Infinity, this.key;
-            for (let i in this.value) {
+            for (let i in this.value) { // looper antall ganger this.value har objekter
                 if (this.value[i] < this.min) {
-                    this.min = this.value[i]
-                    this.key = i;
+                    this.min = this.value[i]; // hvis verdien var lavere en this.min så setter vi verdien til en ny this.min
+                    this.key = i; // setter this.key til laveste veriden
                 }
             }
             //console.log("Opp"+this.key);
+            // keyen returner et tekst svar
             if (this.key === "svar1") { // opp
                 this.rotationB = 90
             }
@@ -142,10 +145,8 @@ class GridSystem { //TODO fortsette
             else if (this.key === "svar3") { // Venstre
                 this.rotationB = 0
             }
-            if (this.svar1 === 100 && this.svar2 === 100) {
-                if (this.svar1 === 100 && this.svar3 === 100){
-                    this.rotationB = 90
-                }
+            if (this.svar1 === 100 && this.svar2 === 100 && this.svar3 === 100) {
+                this.rotationB = 90
             }
         }
         else if(this.rotationB === 180) {//høyre
@@ -178,10 +179,8 @@ class GridSystem { //TODO fortsette
             else if (this.key === "svar3") {
                 this.rotationB = 270
             }
-            if (this.svar1 === 100 && this.svar2 === 100) {
-                if (this.svar1 === 100 && this.svar3 === 100){
-                    this.rotationB = 180
-                }
+            if (this.svar1 === 100 && this.svar2 === 100 && this.svar3 === 100) {
+                this.rotationB = 180
             }
         }
         else if (this.rotationB === 270) {//ned
@@ -214,10 +213,8 @@ class GridSystem { //TODO fortsette
             else if (this.key === "svar3") {
                 this.rotationB = 0
             }
-            if (this.svar1 === 100 && this.svar2 === 100) {
-                if (this.svar1 === 100 && this.svar3 === 100){
-                    this.rotationB = 270
-                }
+            if (this.svar1 === 100 && this.svar2 === 100 && this.svar3 === 100) {
+                this.rotationB = 270;
             }
         }
         else if (this.rotationB === 0) {//venstre
@@ -250,10 +247,8 @@ class GridSystem { //TODO fortsette
             else if (this.key === "svar3") {
                 this.rotationB = 0
             }
-            if (this.svar1 === 100 && this.svar2 === 100) {
-                if (this.svar1 === 100 && this.svar3 === 100){
-                    this.rotationB = 0
-                }
+            if (this.svar1 === 100 && this.svar2 === 100 && this.svar3 === 100) {
+                this.rotationB = 0;
             }
         }
     }
@@ -273,12 +268,12 @@ class GridSystem { //TODO fortsette
         this.findDirB()
         if (this.rotationB === 0) { // Venstre
             //console.log("Venstre")
-            if (this.isValidBlinky(-1, 0)) {
+            if (this.isValidBlinky(-1, 0)) { // sjekker om det er en lovlig move
 
-                this.updateMatrix(this.blinky.y, this.blinky.x, this.bTile);
-                this.bTile = this.matrix[this.blinky.y][this.blinky.x - 1];
-                this.updateMatrix(this.blinky.y, this.blinky.x - 1, 5);
-                this.blinky.x--;
+                this.updateMatrix(this.blinky.y, this.blinky.x, this.bTile); // sletter seg selv og bytter den ut med verdien til som var der
+                this.bTile = this.matrix[this.blinky.y][this.blinky.x - 1]; // husker verdien til blocken foran spøkelse så vi kan bruke den senere
+                this.updateMatrix(this.blinky.y, this.blinky.x - 1, 5); // endre verdien foran seg selv
+                this.blinky.x--; // oppdatere sin faktiske posisjon i matrixen
 
             }
 
@@ -323,8 +318,8 @@ class GridSystem { //TODO fortsette
     movePacman() { //Sjekker om rotasjon kan føre til et gyldig flytt med #isValidMove
         if (this.rotation === 0) { // Sjekker venstre rotasjon
             if (this.#isValidMove(-1, 0)) {
-                this.updateMatrix(this.pacman.y, this.pacman.x, 0)
-                this.updateMatrix(this.pacman.y, this.pacman.x - 1, 3)
+                this.updateMatrix(this.pacman.y, this.pacman.x, 0) // sletter pacman visuelt
+                this.updateMatrix(this.pacman.y, this.pacman.x - 1, 3) // plasserer pacman en block til venstre visuelt
                 this.pacman.x--; //Dersom flyttet er gyldig, flyttes pacman en gang mot venstre i matrixen
             }
         }
@@ -355,7 +350,7 @@ class GridSystem { //TODO fortsette
     #getCenter(w, h) { // Sentrerer banen etter skjermstørrelse
         return {
             x: window.innerWidth / 2 - w / 2 + "px",
-            y: window.innerHeight / 2 - h / 2 - 20 + "px"
+            y: window.innerHeight / 2 - h / 2 + "px"
         };
     }
 
@@ -363,8 +358,8 @@ class GridSystem { //TODO fortsette
         this.canvas = document.createElement("canvas");
         this.context = this.#getContext()
         //this.context = this.canvas.getContext("2d");
-        this.width = this.canvas.width = w;
-        this.height = this.canvas.height = h;
+        this.canvas.width = w;
+        this.canvas.height = h;
         this.canvas.style.position = "absolute";
         this.canvas.style.background = color;
         if (isTransparent) {
@@ -390,7 +385,7 @@ class GridSystem { //TODO fortsette
         this.outlineContext.canvas.width = w;
         this.outlineContext.canvas.height = h;
 
-        const center = this.#getCenter(w, h); //TODO Finn ut av dette i 17/11
+        const center = this.#getCenter(w, h); //TODO Finn ut av dette i 20/11
         this.outlineContext.canvas.style.marginTop = center.y;
         this.outlineContext.canvas.style.marginLeft = center.x;
 
@@ -519,6 +514,7 @@ let highscore = 0;
 let lives = 3;
 let score = 0; //Setter start score
 let level = 0; //Setter start level
+let hschange = 0;//Used if change is detected
 //let time = 100; //Setter start tiden
 let gridSystem;
 gridSystem = new GridSystem(gridMatrix,14, 23, 13, 11); //Setter start posisjonen til pacman og lager alt du ser og mer
@@ -532,12 +528,11 @@ function sendHighScore() {
 }
 
 //Updates the highscore
-function updatehighscore() {
+function updateHighScore() {
     if (score > highscore) {
         highscore = score;
         localStorage['highscore'] = score
         hschange = 1;
-        document.getElementById("highscore-output").innerHTML = score;
     }
     //console.log(highscore)
 }
@@ -545,6 +540,7 @@ function updatehighscore() {
 
 function gameLoop() { // Tatt fra https://github.com/KristianHelland/worm
     if (gridSystem.play) {
+        updateHighScore();
         gridSystem.movePacman();
         gridSystem.moveBlinky();
         //time = time - 1;
@@ -594,12 +590,14 @@ function gameLoop() { // Tatt fra https://github.com/KristianHelland/worm
         console.log(score); //Skriver ut scoren i consolen
     }
     if(gridSystem.matrix[gridSystem.pacman.y][gridSystem.pacman.x] === gridSystem.matrix[gridSystem.blinky.y][gridSystem.blinky.x]) { //Dette skjer når tiden går ut
-        //TODO legg til game over screen
         lives--
         if (lives === 0) {
             console.log("Game over"); //Logger "game over" i console
             console.log(score); //Logger så scoren i console
             gridSystem.uiUpdate(); //Oppdaterer ui en siste gang
+            if (hschange === 1 && score > 0) {
+                setTimeout(sendHighScore, 3000)
+            }
             return; //Går ut av gameloopen som betyr at spillet stopper
         }
 
@@ -609,13 +607,11 @@ function gameLoop() { // Tatt fra https://github.com/KristianHelland/worm
         gridSystem.render();
 
     }
-    //Hvis "if(time <= 0)" ikke er sann, så kjøres de neste 4 linjer med kode.
     gridSystem.loadCoins(); //Loader inn nye coins
     gridSystem.loadPosition(); //Loader posisjon til pacman på nytt
     gridSystem.uiUpdate(); //Oppdaterer ui
     setTimeout(gameLoop, 1000/gridSystem.FPS); //'1000 millisekund delt på 5fps'- sekunders pause før gameloop kjøres igjen.
 }
-//Dette kjøres etter return skjer fra "if(time <= 0) "
 gameLoop();
-console.log(gridSystem.dotCount);
-console.log(score);
+//console.log(gridSystem.dotCount);
+//console.log(score);
