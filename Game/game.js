@@ -1,5 +1,9 @@
 class GridSystem { //TODO fortsette
-    //TODO kommentere - Kristoffer
+    // TODO Samle lagene i et lag for å redusere lag
+    // TODO Legge til de tre andre spøkelsene
+    // TODO Gjøre koden mer dynamisk for å redusere mengde linjer kode
+    // TODO Gjøre umulig å stoppe i en vegg
+    // TODO Kanskje ta noe kode ut av classen?
     constructor(matrix, pacmanX, pacmanY, blinkyX, blinkyY) { //Lager mange lag som ligger oppå hverandre for å vise siden og definerer disse.
         this.matrix = matrix;
         this.uiContext = this.#makeCanvas(850, 850, "#000");
