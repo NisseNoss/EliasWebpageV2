@@ -8,8 +8,8 @@ class GridSystem { //TODO fortsette
         this.matrix = matrix;
         this.uiContext = this.#makeCanvas(850, 850, "#000");
         this.outlineContext = this.#makeCanvas(0, 0, "#000");
-        this.coinContext = this.#makeCanvas(0, 0, "#000", true);
-        this.topContext = this.#makeCanvas(0, 0, "#000", true);
+        //this.coinContext = this.#makeCanvas(0, 0, "#000", true);
+        //this.topContext = this.#makeCanvas(0, 0, "#000", true);
         //maze størelse
         this.cellSize = 24;
         this.padding = 1;
@@ -42,6 +42,8 @@ class GridSystem { //TODO fortsette
     }*/
 
     uiUpdate() { //Oppdaterer UI laget der score og tid er vist
+        this.uiContext.font = "20px Courier";
+        this.uiContext.fillStyle = "#fff";
         this.uiContext.clearRect(0,0,850,850) //Sletter vekk alt på laget, slik at ny up-to-date kan bli plassert under.
         this.uiContext.fillText("Score: " + score, 20, 30); //Skriver opp igjen Score
         this.uiContext.fillText("Lives: " + lives, 740, 30);
@@ -136,7 +138,7 @@ class GridSystem { //TODO fortsette
                 if (this.value[i] < this.min) {
                     this.min = this.value[i]; // hvis verdien var lavere en this.min så setter vi verdien til en ny this.min
                     this.key = i; // setter this.key til laveste veriden
-                }
+                } // Bruke dette til å skjekke om Clad
             }
             //console.log("Opp"+this.key);
             // keyen returner et tekst svar
@@ -383,6 +385,7 @@ class GridSystem { //TODO fortsette
     }
 
     render() { // Render Maze
+        this.dotCount = 0;
         const w = (this.cellSize + this.padding) * this.matrix[0].length - (this.padding)
         const h = (this.cellSize + this.padding) * this.matrix.length - (this.padding)
 
@@ -402,17 +405,24 @@ class GridSystem { //TODO fortsette
                     color = "#4488FF";
                 } else if (cellVal === 2) {
                     color = "#FFCBFF";
-                }  /*else if (cellVal === 3) {
+                } else if (cellVal === 3) {
                     color = this.pacman.color;
-                }*/
-                this.outlineContext.fillStyle = color;
-                this.outlineContext.fillRect(col * (this.cellSize + this.padding),
-                    row * (this.cellSize + this.padding),
-                    this.cellSize, this.cellSize);
+                } else if (cellVal === 4) {
+                    this.dotCount++
+                    this.outlineContext.fillStyle = "#ecc400";
+                    this.outlineContext.fillRect(col * (this.cellSize + this.padding) + 7.5,
+                        row * (this.cellSize + this.padding) + 7.5,
+                        this.cellSize-15, this.cellSize - 15 );
+                } else if (cellVal === 5) {
+                    color = this.blinky.color;
+                } if (cellVal !== 4) {
+                    this.outlineContext.fillStyle = color;
+                    this.outlineContext.fillRect(col * (this.cellSize + this.padding),
+                        row * (this.cellSize + this.padding),
+                        this.cellSize, this.cellSize);
+                }
             }
         }
-        this.uiContext.font = "20px Courier";
-        this.uiContext.fillStyle = "#fff";
     }
 
     loadCoins() {
@@ -600,7 +610,7 @@ function gameLoop() { // Tatt fra https://github.com/KristianHelland/worm
             console.log(score); //Logger så scoren i console
             gridSystem.uiUpdate(); //Oppdaterer ui en siste gang
             if (hschange === 1 && score > 0) {
-                setTimeout(sendHighScore, 3000)
+                setTimeout(sendHighScore, 3000);
             }
             return; //Går ut av gameloopen som betyr at spillet stopper
         }
@@ -611,8 +621,9 @@ function gameLoop() { // Tatt fra https://github.com/KristianHelland/worm
         gridSystem.render();
 
     }
-    gridSystem.loadCoins(); //Loader inn nye coins
-    gridSystem.loadPosition(); //Loader posisjon til pacman på nytt
+    gridSystem.render();
+    //gridSystem.loadCoins(); //Loader inn nye coins
+    //gridSystem.loadPosition(); //Loader posisjon til pacman på nytt
     gridSystem.uiUpdate(); //Oppdaterer ui
     setTimeout(gameLoop, 1000/gridSystem.FPS); //'1000 millisekund delt på 5fps'- sekunders pause før gameloop kjøres igjen.
 }
