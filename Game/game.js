@@ -14,7 +14,7 @@ class GridSystem { //TODO fortsette
         this.cellSize = 24;
         this.padding = 1;
         //Pacman
-        this.pacman = {x: pacmanX, y: pacmanY, color: "orange"}
+        this.pacman = {x: pacmanX, y: pacmanY, color: "orange"};
         this.matrix [pacmanY][pacmanX] = 3;
         this.rotation = 0;
 
@@ -29,7 +29,7 @@ class GridSystem { //TODO fortsette
         this.play = false;
         this.dotCount = null; //Setter dotCount til NULL istede for 0, fordi dotCount === 0 vil slutte av programmet lengre nede
 
-        document.addEventListener("keydown", this.#rotatePacman) //Koden hører alltid etter et innput fra tasturet til brukeren
+        document.addEventListener("keydown", this.#rotatePacman); //Koden hører alltid etter et innput fra tasturet til brukeren
     }
 
     /*#fps() {
@@ -100,7 +100,7 @@ class GridSystem { //TODO fortsette
             return true;
         }
         else if (this.matrix[this.blinky.y + y][this.blinky.x + x] === 3) { //Flytter dersom neste posisjon er pacman
-            return true
+            return true;
         }
         return false; // Hvis ingen av if påstandene er sanne returner vi false
     }
@@ -143,16 +143,16 @@ class GridSystem { //TODO fortsette
             //console.log("Opp"+this.key);
             // keyen returner et tekst svar
             if (this.key === "svar1") { // opp
-                this.rotationB = 90
+                this.rotationB = 90;
             }
             else if (this.key === "svar2") { // Høyre
-                this.rotationB = 180
+                this.rotationB = 180;
             }
             else if (this.key === "svar3") { // Venstre
-                this.rotationB = 0
+                this.rotationB = 0;
             }
             if (this.svar1 === 100 && this.svar2 === 100 && this.svar3 === 100) {
-                this.rotationB = 90
+                this.rotationB = 90;
             }
         }
         else if(this.rotationB === 180) {//høyre
@@ -171,22 +171,22 @@ class GridSystem { //TODO fortsette
             this.value = {svar1: this.svar1, svar2: this.svar2, svar3: this.svar3}, this.min = Infinity, this.key;
             for (let i in this.value) {
                 if (this.value[i] < this.min) {
-                    this.min = this.value[i]
+                    this.min = this.value[i];
                     this.key = i;
                 }
             }
             //console.log("Høyre "+this.key);
             if (this.key === "svar1") {
-                this.rotationB = 90
+                this.rotationB = 90;
             }
             else if (this.key === "svar2") {
-                this.rotationB = 180
+                this.rotationB = 180;
             }
             else if (this.key === "svar3") {
-                this.rotationB = 270
+                this.rotationB = 270;
             }
             if (this.svar1 === 100 && this.svar2 === 100 && this.svar3 === 100) {
-                this.rotationB = 180
+                this.rotationB = 180;
             }
         }
         else if (this.rotationB === 270) {//ned
@@ -205,19 +205,19 @@ class GridSystem { //TODO fortsette
             this.value = {svar1: this.svar1, svar2: this.svar2, svar3: this.svar3}, this.min = Infinity, this.key;
             for (let i in this.value) {
                 if (this.value[i] < this.min) {
-                    this.min = this.value[i]
+                    this.min = this.value[i];
                     this.key = i;
                 }
             }
             //console.log("Ned" +this.key);
             if (this.key === "svar1") {
-                this.rotationB = 180
+                this.rotationB = 180;
             }
             else if (this.key === "svar2") {
-                this.rotationB = 270
+                this.rotationB = 270;
             }
             else if (this.key === "svar3") {
-                this.rotationB = 0
+                this.rotationB = 0;
             }
             if (this.svar1 === 100 && this.svar2 === 100 && this.svar3 === 100) {
                 this.rotationB = 270;
@@ -239,19 +239,19 @@ class GridSystem { //TODO fortsette
             this.value = {svar1: this.svar1, svar2: this.svar2, svar3: this.svar3}, this.min = Infinity, this.key;
             for (let i in this.value) {
                 if (this.value[i] < this.min) {
-                    this.min = this.value[i]
+                    this.min = this.value[i];
                     this.key = i;
                 }
             }
             //console.log("Venstre "+this.key);
             if (this.key === "svar1") {
-                this.rotationB = 90
+                this.rotationB = 90;
             }
             else if (this.key === "svar2") {
-                this.rotationB = 270
+                this.rotationB = 270;
             }
             else if (this.key === "svar3") {
-                this.rotationB = 0
+                this.rotationB = 0;
             }
             if (this.svar1 === 100 && this.svar2 === 100 && this.svar3 === 100) {
                 this.rotationB = 0;
@@ -288,9 +288,9 @@ class GridSystem { //TODO fortsette
             //console.log("Høyre")
             if (this.isValidBlinky(1, 0)) {
 
-                this.updateMatrix(this.blinky.y, this.blinky.x, this.bTile)
-                this.bTile = this.matrix[this.blinky.y][this.blinky.x + 1]
-                this.updateMatrix(this.blinky.y, this.blinky.x + 1, 5)
+                this.updateMatrix(this.blinky.y, this.blinky.x, this.bTile);
+                this.bTile = this.matrix[this.blinky.y][this.blinky.x + 1];
+                this.updateMatrix(this.blinky.y, this.blinky.x + 1, 5);
                 this.blinky.x++;
 
             }
@@ -300,9 +300,9 @@ class GridSystem { //TODO fortsette
             //console.log("Opp")
             if (this.isValidBlinky(0, -1)) {
 
-                this.updateMatrix(this.blinky.y, this.blinky.x, this.bTile)
-                this.bTile = this.matrix[this.blinky.y - 1][this.blinky.x]
-                this.updateMatrix(this.blinky.y - 1, this.blinky.x, 5)
+                this.updateMatrix(this.blinky.y, this.blinky.x, this.bTile);
+                this.bTile = this.matrix[this.blinky.y - 1][this.blinky.x];
+                this.updateMatrix(this.blinky.y - 1, this.blinky.x, 5);
                 this.blinky.y--;
 
             }
@@ -311,9 +311,9 @@ class GridSystem { //TODO fortsette
             //console.log("Ned")
             if (this.isValidBlinky(0, 1)) {
 
-                this.updateMatrix(this.blinky.y, this.blinky.x, this.bTile)
-                this.bTile = this.matrix[this.blinky.y + 1][this.blinky.x]
-                this.updateMatrix(this.blinky.y + 1, this.blinky.x, 5)
+                this.updateMatrix(this.blinky.y, this.blinky.x, this.bTile);
+                this.bTile = this.matrix[this.blinky.y + 1][this.blinky.x];
+                this.updateMatrix(this.blinky.y + 1, this.blinky.x, 5);
                 this.blinky.y++;
 
             }
@@ -324,29 +324,29 @@ class GridSystem { //TODO fortsette
     movePacman() { //Sjekker om rotasjon kan føre til et gyldig flytt med #isValidMove
         if (this.rotation === 0) { // Sjekker venstre rotasjon
             if (this.#isValidMove(-1, 0)) {
-                this.updateMatrix(this.pacman.y, this.pacman.x, 0) // sletter pacman visuelt
-                this.updateMatrix(this.pacman.y, this.pacman.x - 1, 3) // plasserer pacman en block til venstre visuelt
+                this.updateMatrix(this.pacman.y, this.pacman.x, 0); // sletter pacman visuelt
+                this.updateMatrix(this.pacman.y, this.pacman.x - 1, 3); // plasserer pacman en block til venstre visuelt
                 this.pacman.x--; //Dersom flyttet er gyldig, flyttes pacman en gang mot venstre i matrixen
             }
         }
         if (this.rotation === 180) { // Sjekker høyre rotasjon
             if (this.#isValidMove(1, 0)) {
-                this.updateMatrix(this.pacman.y, this.pacman.x, 0)
-                this.updateMatrix(this.pacman.y, this.pacman.x + 1, 3)
+                this.updateMatrix(this.pacman.y, this.pacman.x, 0);
+                this.updateMatrix(this.pacman.y, this.pacman.x + 1, 3);
                 this.pacman.x++; //Dersom flyttet er gyldig, flyttes pacman en gang mot høyre i matrixen
             }
         }
         if (this.rotation === 90) { // Sjekker oppover rotasjon
             if (this.#isValidMove(0, -1)) {
-                this.updateMatrix(this.pacman.y, this.pacman.x, 0)
-                this.updateMatrix(this.pacman.y - 1, this.pacman.x, 3)
+                this.updateMatrix(this.pacman.y, this.pacman.x, 0);
+                this.updateMatrix(this.pacman.y - 1, this.pacman.x, 3);
                 this.pacman.y--; //Dersom flyttet er gyldig, flyttes pacman en gang mot oppover i matrixen
             }
         }
         if (this.rotation === 270) { // Sjekker nedover rotasjon
             if (this.#isValidMove(0, 1)) {
-                this.updateMatrix(this.pacman.y, this.pacman.x, 0)
-                this.updateMatrix(this.pacman.y + 1, this.pacman.x, 3)
+                this.updateMatrix(this.pacman.y, this.pacman.x, 0);
+                this.updateMatrix(this.pacman.y + 1, this.pacman.x, 3);
                 this.pacman.y++; //Dersom flyttet er gyldig, flyttes pacman en gang mot nedover i matrixen
             }
         }
@@ -443,7 +443,7 @@ class GridSystem { //TODO fortsette
 
 
                 if (cellVal === 4) {
-                    this.dotCount++
+                    this.dotCount++;
                     this.coinContext.fillStyle = "#ecc400";
                     this.coinContext.fillRect(col * (this.cellSize + this.padding) + 7.5,
                         row * (this.cellSize + this.padding) + 7.5,
@@ -615,8 +615,8 @@ function gameLoop() { // Tatt fra https://github.com/KristianHelland/worm
             return; //Går ut av gameloopen som betyr at spillet stopper
         }
 
-        gridSystem.updateMatrix(gridSystem.pacman.y, gridSystem.pacman.x, 0)
-        gridSystem.updateMatrix(gridSystem.blinky.y, gridSystem.blinky.x, 0)
+        gridSystem.updateMatrix(gridSystem.pacman.y, gridSystem.pacman.x, 0);
+        gridSystem.updateMatrix(gridSystem.blinky.y, gridSystem.blinky.x, 0);
         gridSystem = new GridSystem(gridMatrix,14, 23, 13, 11); //Plasserer pacman på start posisjon
         gridSystem.render();
 
