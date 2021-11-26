@@ -1,10 +1,11 @@
 class GridSystem { //TODO fortsette
-    // TODO Samle lagene i et lag for å redusere lag
-    // TODO Legge til de tre andre spøkelsene
+    // TODO Legge til Pinky
+    // TODO legge til Clyde
+    // TODO legge til Inky
     // TODO Gjøre koden mer dynamisk for å redusere mengde linjer kode
     // TODO Gjøre umulig å stoppe i en vegg
     // TODO Kanskje ta noe kode ut av classen?
-    constructor(matrix, pacmanX, pacmanY, blinkyX, blinkyY) { //Lager mange lag som ligger oppå hverandre for å vise siden og definerer disse.
+    constructor(matrix, pacmanX, pacmanY, blinkyX, blinkyY, pinkyX, pinkyY, inkyX, inkyY) { //Lager mange lag som ligger oppå hverandre for å vise siden og definerer disse.
         this.matrix = matrix;
         this.uiContext = this.#makeCanvas(850, 850, "#000");
         this.outlineContext = this.#makeCanvas(0, 0, "#000");
@@ -22,7 +23,19 @@ class GridSystem { //TODO fortsette
         this.blinky = {x: blinkyX, y: blinkyY, color: "red"};
         this.matrix [blinkyY][blinkyX] = 5;
         this.rotationB = 0;
-        this.bTile = 0;
+        this.bTile = 4;
+
+        //Pinky
+        this.pinky = {x: pinkyX, y: blinkyY, color: "#FFB9FF"};
+        this.matrix [pinkyY][pinkyX] = 6;
+        this.rotationP = 0;
+        this.pTile = 4;
+
+        //Inky
+        this.inky = {x:inkyX, y:inkyY, color: "#00FFFF"}
+        this.matrix [inkyY][inkyX] = 7;
+        this.rotationI = 0;
+        this.iTile = 4;
 
         //game variabler
         this.FPS = 5;
@@ -92,22 +105,107 @@ class GridSystem { //TODO fortsette
         }
     }
 
-    isValidBlinky(x, y) { //Sjekker om Blinky kan bevege seg i valgt rettning
-        if (this.matrix[this.blinky.y + y][this.blinky.x + x] === 0) { //Flytter dersom neste posisjon er tom
+    isValidGhost(x, y, ghostX, ghostY) { //Sjekker om Blinky kan bevege seg i valgt rettning
+        if (this.matrix[ghostY + y][ghostX + x] === 0) { //Flytter dersom neste posisjon er tom
             return true;
         }
-        else if (this.matrix[this.blinky.y + y][this.blinky.x + x] === 4) { //Flytter dersom neste posisjon er en coin
+        else if (this.matrix[ghostY + y][ghostX + x] === 4) { //Flytter dersom neste posisjon er en coin
             return true;
         }
-        else if (this.matrix[this.blinky.y + y][this.blinky.x + x] === 3) { //Flytter dersom neste posisjon er pacman
+        else if (this.matrix[ghostY + y][ghostX + x] === 3) { //Flytter dersom neste posisjon er pacman
             return true;
         }
         return false; // Hvis ingen av if påstandene er sanne returner vi false
     }
 
+    #findOffset(ghost) {
+        if (ghost === 3) {
+            if (this.rotation === 90) {
+                return {
+                    x: 0,
+                    y: -2
+                };
+            }
+            if (this.rotation === 180) {
+                return {
+                    x: 2,
+                    y: 0
+                };
+            }
+            if (this.rotation === 270) {
+                return {
+                    x: 0,
+                    y: 2
+                };
+            }
+            if (this.rotation === 0) {
+                return {
+                    x: -2,
+                    y: 0
+                };
+            }
+        }
+        if (ghost === 2) {
+            if (this.rotation === 90) {
+                return {
+                    x: 0,
+                    y: -4
+                };
+            }
+            if (this.rotation === 180) {
+                return {
+                    x: 4,
+                    y: 0
+                };
+            }
+            if (this.rotation === 270) {
+                return {
+                    x: 0,
+                    y: 4
+                };
+            }
+            if (this.rotation === 0) {
+                return {
+                    x: -4,
+                    y: 0
+                };
+            }
+        }
+    }
+
+    findTargetInky() {
+        let offset = this.#findOffset(3)
+        this.diffx = this.blinky.x - (this.pacman.x + offset.x);
+        this.diffy = this.blinky.y - (this.pacman.y + offset.y);
+
+        this.targetx = (this.pacman.x + offset.x) - this.diffx;
+        this.targety = (this.pacman.y + offset.y) - this.diffy;
+        //this.targetI = {x: this.targetx, y: this.targety};
+    }
+
     makeValueBlinky(x, y) { // Vi bruker pytagoras' læresetning for å finne den korteste avstanden
         this.bPosX = this.blinky.x + x - this.pacman.x; // Side a
         this.bPosY = this.blinky.y + y - this.pacman.y; // side b
+    }
+    makeValueGhost(x, y, ghost) {
+        if (ghost === 1) {
+            this.PosX = this.blinky.x + x - this.pacman.x; // Side a
+            this.PosY = this.blinky.y + y - this.pacman.y; // side b
+        }
+        else if (ghost === 2) {
+            let offset = this.#findOffset(2)
+            this.PosX = this.pinky.x + x - this.pacman.x - offset.x;
+            this.PosY = this.pinky.y + y - this.pacman.y - offset.y;
+        }
+        else if (ghost === 3) {
+            this.findTargetInky()
+            this.posX = this.inky.x + x - this.targetx;
+            this.posY = this.inky.x + y - this.targety;
+        }
+        else if (ghost === 4) {
+
+        }
+
     }
 
     findDirB() {
@@ -118,17 +216,17 @@ class GridSystem { //TODO fortsette
         this.svar2 = 100;
         this.svar3 = 100;
         if (this.rotationB === 90) {//Opp
-            if (this.isValidBlinky(0, -1)) { // Sjekker Opp
+            if (this.isValidGhost(0, -1, this.blinky.x, this.blinky.y)) { // Sjekker Opp
                 this.makeValueBlinky(0, -1);
                 this.svar1 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY); // gir avstanden til pacmen og spøkelse i luft linje
             }
 
-            if (this.isValidBlinky(1, 0)) { // Sjekker høyre
+            if (this.isValidGhost(1, 0, this.blinky.x, this.blinky.y)) { // Sjekker høyre
                 this.makeValueBlinky(1, 0);
                 this.svar2 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY); // --||--
             }
 
-            if (this.isValidBlinky(-1, 0)) { // Sjekker venstre
+            if (this.isValidGhost(-1, 0, this.blinky.x, this.blinky.y)) { // Sjekker venstre
                 this.makeValueBlinky(-1, 0);
                 this.svar3 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY); // --||--
             }
@@ -156,15 +254,15 @@ class GridSystem { //TODO fortsette
             }
         }
         else if(this.rotationB === 180) {//høyre
-            if (this.isValidBlinky(0, -1)) { // Sjekker Opp
+            if (this.isValidGhost(0, -1, this.blinky.x, this.blinky.y)) { // Sjekker Opp
                 this.makeValueBlinky(0, -1);
                 this.svar1 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
             }
-            if (this.isValidBlinky(1, 0)) { //Sjekker høyre
+            if (this.isValidGhost(1, 0, this.blinky.x, this.blinky.y)) { //Sjekker høyre
                 this.makeValueBlinky(1, 0);
                 this.svar2 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
             }
-            if (this.isValidBlinky(0, 1)) {  //Sjekker ned
+            if (this.isValidGhost(0, 1, this.blinky.x, this.blinky.y)) {  //Sjekker ned
                 this.makeValueBlinky(0, 1);
                 this.svar3 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
             }
@@ -190,15 +288,15 @@ class GridSystem { //TODO fortsette
             }
         }
         else if (this.rotationB === 270) {//ned
-            if (this.isValidBlinky(1, 0)) {
+            if (this.isValidGhost(1, 0, this.blinky.x, this.blinky.y)) {
                 this.makeValueBlinky(1, 0); //Sjekker høyre
                 this.svar1 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
             }
-            if (this.isValidBlinky(0, 1)) {  //Sjekker ned
+            if (this.isValidGhost(0, 1, this.blinky.x, this.blinky.y)) {  //Sjekker ned
                 this.makeValueBlinky(0, 1);
                 this.svar2 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
             }
-            if (this.isValidBlinky(-1, 0)) { // Sjekker venstre
+            if (this.isValidGhost(-1, 0, this.blinky.x, this.blinky.y)) { // Sjekker venstre
                 this.makeValueBlinky(-1, 0);
                 this.svar3 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
             }
@@ -224,15 +322,15 @@ class GridSystem { //TODO fortsette
             }
         }
         else if (this.rotationB === 0) {//venstre
-            if (this.isValidBlinky(0, -1)) { // Sjekker Opp
+            if (this.isValidGhost(0, -1, this.blinky.x, this.blinky.y)) { // Sjekker Opp
                 this.makeValueBlinky(0, -1);
                 this.svar1 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
             }
-            if (this.isValidBlinky(0, 1)) {  //Sjekker ned
+            if (this.isValidGhost(0, 1, this.blinky.x, this.blinky.y)) {  //Sjekker ned
                 this.makeValueBlinky(0, 1);
                 this.svar2 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
             }
-            if (this.isValidBlinky(-1, 0)) { // Sjekker venstre
+            if (this.isValidGhost(-1, 0, this.blinky.x, this.blinky.y)) { // Sjekker venstre
                 this.makeValueBlinky(-1, 0);
                 this.svar3 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
             }
@@ -274,7 +372,7 @@ class GridSystem { //TODO fortsette
         this.findDirB()
         if (this.rotationB === 0) { // Venstre
             //console.log("Venstre")
-            if (this.isValidBlinky(-1, 0)) { // sjekker om det er en lovlig move
+            if (this.isValidGhost(-1, 0)) { // sjekker om det er en lovlig move
 
                 this.updateMatrix(this.blinky.y, this.blinky.x, this.bTile); // sletter seg selv og bytter den ut med verdien til som var der
                 this.bTile = this.matrix[this.blinky.y][this.blinky.x - 1]; // husker verdien til blocken foran spøkelse så vi kan bruke den senere
@@ -286,7 +384,7 @@ class GridSystem { //TODO fortsette
         }
         if (this.rotationB === 180) { // Høyre
             //console.log("Høyre")
-            if (this.isValidBlinky(1, 0)) {
+            if (this.isValidGhost(1, 0)) {
 
                 this.updateMatrix(this.blinky.y, this.blinky.x, this.bTile);
                 this.bTile = this.matrix[this.blinky.y][this.blinky.x + 1];
@@ -298,7 +396,7 @@ class GridSystem { //TODO fortsette
         }
         if (this.rotationB === 90) { // Opp
             //console.log("Opp")
-            if (this.isValidBlinky(0, -1)) {
+            if (this.isValidGhost(0, -1)) {
 
                 this.updateMatrix(this.blinky.y, this.blinky.x, this.bTile);
                 this.bTile = this.matrix[this.blinky.y - 1][this.blinky.x];
@@ -309,7 +407,7 @@ class GridSystem { //TODO fortsette
         }
         if (this.rotationB === 270) { // Ned
             //console.log("Ned")
-            if (this.isValidBlinky(0, 1)) {
+            if (this.isValidGhost(0, 1)) {
 
                 this.updateMatrix(this.blinky.y, this.blinky.x, this.bTile);
                 this.bTile = this.matrix[this.blinky.y + 1][this.blinky.x];
@@ -415,7 +513,11 @@ class GridSystem { //TODO fortsette
                         this.cellSize-15, this.cellSize - 15 );
                 } else if (cellVal === 5) {
                     color = this.blinky.color;
-                } if (cellVal !== 4) {
+                } else if (cellVal === 6) {
+                    color = this.pinky.color;
+                } else if (cellVal === 7) {
+                    color = this.inky.color;
+                }if (cellVal !== 4) {
                     this.outlineContext.fillStyle = color;
                     this.outlineContext.fillRect(col * (this.cellSize + this.padding),
                         row * (this.cellSize + this.padding),
@@ -531,8 +633,8 @@ let level = 0; //Setter start level
 let hschange = 0;//Used if change is detected
 //let time = 100; //Setter start tiden
 let gridSystem;
-gridSystem = new GridSystem(gridMatrix,14, 23, 13, 11); //Setter start posisjonen til pacman og lager alt du ser og mer
-gridSystem.render();
+gridSystem = new GridSystem(gridMatrix,14, 23, 26, 1, 1, 1, 26, 29); //Setter start posisjonen til pacman og lager alt du ser og mer
+gridSystem.render(); //
 
 function sendHighScore() {
     $("#p1").val(name);
@@ -545,14 +647,14 @@ function sendHighScore() {
 function updateHighScore() {
     if (score > highscore) {
         highscore = score;
-        localStorage['highscore'] = score
+        localStorage['highscore'] = score;
         hschange = 1;
     }
     //console.log(highscore)
 }
 
 
-function gameLoop() { // Tatt fra https://github.com/KristianHelland/worm
+function gameLoop() { // Tatt fra https://github.com/KristianHelland/worm som tok det fra https://github.com/AndreasVJ/snake
     if (gridSystem.play) {
         updateHighScore();
         gridSystem.movePacman();
@@ -621,7 +723,7 @@ function gameLoop() { // Tatt fra https://github.com/KristianHelland/worm
         gridSystem.render();
 
     }
-    gridSystem.render();
+    gridSystem.render(); // Alt ligger på samme canvaset
     //gridSystem.loadCoins(); //Loader inn nye coins
     //gridSystem.loadPosition(); //Loader posisjon til pacman på nytt
     gridSystem.uiUpdate(); //Oppdaterer ui
