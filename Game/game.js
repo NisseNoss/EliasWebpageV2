@@ -309,7 +309,7 @@ class GridSystem { //TODO fortsette
                 }
             }
         }
-        else if(this.rotationB === 180) {//høyre
+        else if(ghostRotation === 180) {//høyre
             if (this.isValidGhost(0, -1, this.blinky.x, this.blinky.y)) { // Sjekker Opp
                 this.makeValueBlinky(0, -1);
                 this.svar1 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
@@ -330,20 +330,56 @@ class GridSystem { //TODO fortsette
                 }
             }
             //console.log("Høyre "+this.key);
-            if (this.key === "svar1") {
-                this.rotationB = 90;
+            if (GhostID === 1) {
+                if (this.key === "svar1") {
+                    this.rotationB = 90;
+                } else if (this.key === "svar2") {
+                    this.rotationB = 180;
+                } else if (this.key === "svar3") {
+                    this.rotationB = 270;
+                }
+                if (this.svar1 === 100 && this.svar2 === 100 && this.svar3 === 100) {
+                    this.rotationB = 180;
+                }
             }
-            else if (this.key === "svar2") {
-                this.rotationB = 180;
+            else if (GhostID === 2) {
+                if (this.key === "svar1") {
+                    this.rotationP = 90;
+                } else if (this.key === "svar2") {
+                    this.rotationP = 180;
+                } else if (this.key === "svar3") {
+                    this.rotationP = 270;
+                }
+                if (this.svar1 === 100 && this.svar2 === 100 && this.svar3 === 100) {
+                    this.rotationP = 180;
+                }
             }
-            else if (this.key === "svar3") {
-                this.rotationB = 270;
+            else if (GhostID === 3) {
+                if (this.key === "svar1") {
+                    this.rotationI = 90;
+                } else if (this.key === "svar2") {
+                    this.rotationI = 180;
+                } else if (this.key === "svar3") {
+                    this.rotationI = 270;
+                }
+                if (this.svar1 === 100 && this.svar2 === 100 && this.svar3 === 100) {
+                    this.rotationI = 180;
+                }
             }
-            if (this.svar1 === 100 && this.svar2 === 100 && this.svar3 === 100) {
-                this.rotationB = 180;
+            else if (GhostID === 4) {
+                if (this.key === "svar1") {
+                    this.rotationC = 90;
+                } else if (this.key === "svar2") {
+                    this.rotationC = 180;
+                } else if (this.key === "svar3") {
+                    this.rotationC= 270;
+                }
+                if (this.svar1 === 100 && this.svar2 === 100 && this.svar3 === 100) {
+                    this.rotationC = 180;
+                }
             }
         }
-        else if (this.rotationB === 270) {//ned
+        else if (ghostRotation === 270) {//ned
             if (this.isValidGhost(1, 0, this.blinky.x, this.blinky.y)) {
                 this.makeValueBlinky(1, 0); //Sjekker høyre
                 this.svar1 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
@@ -364,20 +400,56 @@ class GridSystem { //TODO fortsette
                 }
             }
             //console.log("Ned" +this.key);
-            if (this.key === "svar1") {
-                this.rotationB = 180;
+            if (GhostID === 1) {
+                if (this.key === "svar1") {
+                    this.rotationB = 180;
+                } else if (this.key === "svar2") {
+                    this.rotationB = 270;
+                } else if (this.key === "svar3") {
+                    this.rotationB = 0;
+                }
+                if (this.svar1 === 100 && this.svar2 === 100 && this.svar3 === 100) {
+                    this.rotationB = 270;
+                }
             }
-            else if (this.key === "svar2") {
-                this.rotationB = 270;
+            else if (GhostID === 2) {
+                if (this.key === "svar1") {
+                    this.rotationP = 180;
+                } else if (this.key === "svar2") {
+                    this.rotationP = 270;
+                } else if (this.key === "svar3") {
+                    this.rotationP = 0;
+                }
+                if (this.svar1 === 100 && this.svar2 === 100 && this.svar3 === 100) {
+                    this.rotationP = 270;
+                }
             }
-            else if (this.key === "svar3") {
-                this.rotationB = 0;
+            else if (GhostID === 3) {
+                if (this.key === "svar1") {
+                    this.rotationI = 180;
+                } else if (this.key === "svar2") {
+                    this.rotationI = 270;
+                } else if (this.key === "svar3") {
+                    this.rotationI = 0;
+                }
+                if (this.svar1 === 100 && this.svar2 === 100 && this.svar3 === 100) {
+                    this.rotationI = 270;
+                }
             }
-            if (this.svar1 === 100 && this.svar2 === 100 && this.svar3 === 100) {
-                this.rotationB = 270;
+            else if (GhostID === 4) {
+                if (this.key === "svar1") {
+                    this.rotationC = 180;
+                } else if (this.key === "svar2") {
+                    this.rotationC = 270;
+                } else if (this.key === "svar3") {
+                    this.rotationC = 0;
+                }
+                if (this.svar1 === 100 && this.svar2 === 100 && this.svar3 === 100) {
+                    this.rotationC = 270;
+                }
             }
         }
-        else if (this.rotationB === 0) {//venstre
+        else if (ghostRotation === 0) {//venstre
             if (this.isValidGhost(0, -1, this.blinky.x, this.blinky.y)) { // Sjekker Opp
                 this.makeValueBlinky(0, -1);
                 this.svar1 = Math.sqrt(this.bPosX * this.bPosX + this.bPosY * this.bPosY);
@@ -398,17 +470,53 @@ class GridSystem { //TODO fortsette
                 }
             }
             //console.log("Venstre "+this.key);
-            if (this.key === "svar1") {
-                this.rotationB = 90;
+            if (GhostID === 1) {
+                if (this.key === "svar1") {
+                    this.rotationB = 90;
+                } else if (this.key === "svar2") {
+                    this.rotationB = 270;
+                } else if (this.key === "svar3") {
+                    this.rotationB = 0;
+                }
+                if (this.svar1 === 100 && this.svar2 === 100 && this.svar3 === 100) {
+                    this.rotationB = 0;
+                }
             }
-            else if (this.key === "svar2") {
-                this.rotationB = 270;
+            if (GhostID === 2) {
+                if (this.key === "svar1") {
+                    this.rotationP = 90;
+                } else if (this.key === "svar2") {
+                    this.rotationP = 270;
+                } else if (this.key === "svar3") {
+                    this.rotationP = 0;
+                }
+                if (this.svar1 === 100 && this.svar2 === 100 && this.svar3 === 100) {
+                    this.rotationP = 0;
+                }
             }
-            else if (this.key === "svar3") {
-                this.rotationB = 0;
+            if (GhostID === 3) {
+                if (this.key === "svar1") {
+                    this.rotationI = 90;
+                } else if (this.key === "svar2") {
+                    this.rotationI = 270;
+                } else if (this.key === "svar3") {
+                    this.rotationI = 0;
+                }
+                if (this.svar1 === 100 && this.svar2 === 100 && this.svar3 === 100) {
+                    this.rotationI = 0;
+                }
             }
-            if (this.svar1 === 100 && this.svar2 === 100 && this.svar3 === 100) {
-                this.rotationB = 0;
+            if (GhostID === 4) {
+                if (this.key === "svar1") {
+                    this.rotationC = 90;
+                } else if (this.key === "svar2") {
+                    this.rotationC = 270;
+                } else if (this.key === "svar3") {
+                    this.rotationC = 0;
+                }
+                if (this.svar1 === 100 && this.svar2 === 100 && this.svar3 === 100) {
+                    this.rotationC = 0;
+                }
             }
         }
     }
