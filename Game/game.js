@@ -227,7 +227,7 @@ class GridSystem { //TODO fortsette
         }
     }
 
-    findDirB(GhostX, GhostY, GhostID) {
+    findDirGhost(GhostX, GhostY, GhostID) {
         // Ghost logic
         // Spøkelsene skal sjekke hvilken vei som er kortest å gå for å komme seg til pacman. De skjekker bare veier som er lov å gå.
         // De kan ikke sjekke bak seg eller snu 180 rundt
@@ -533,7 +533,7 @@ class GridSystem { //TODO fortsette
     }*/
 
     moveBlinky() {
-        this.findDirB(this.blinky.x, this.blinky.y, 1)
+        this.findDirGhost(this.blinky.x, this.blinky.y, 1)
         if (this.rotationB === 0) { // Venstre
             //console.log("Venstre")
             if (this.isValidGhost(-1, 0, this.blinky.x, this.blinky.y)) { // sjekker om det er en lovlig move
@@ -582,7 +582,7 @@ class GridSystem { //TODO fortsette
         }
     }
     moveInky() {
-        this.findDirB()
+        this.findDirGhost(this.inky.x, this.inky, 3)
         if (this.rotationI === 0) { // Venstre
             //console.log("Venstre")
             if (this.isValidGhost(-1, 0, this.inky.x, this.inky.y)) { // sjekker om det er en lovlig move
@@ -872,6 +872,7 @@ function gameLoop() { // Tatt fra https://github.com/KristianHelland/worm som to
         updateHighScore();
         gridSystem.movePacman();
         gridSystem.moveBlinky();
+        gridSystem.moveInky();
         //time = time - 1;
         //console.log(time)
     }
