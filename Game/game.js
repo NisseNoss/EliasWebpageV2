@@ -149,7 +149,7 @@ class GridSystem { //TODO fortsette
                 };
             }
         }
-        if (ghost === 2) {
+        else if (ghost === 2) {
             if (this.rotation === 90) {
                 return {
                     x: 0,
@@ -191,22 +191,23 @@ class GridSystem { //TODO fortsette
         this.bPosX = this.blinky.x + x - this.pacman.x; // Side a
         this.bPosY = this.blinky.y + y - this.pacman.y; // side b
     }
+
     makeValueGhost(x, y, ghost) {
         if (ghost === 1) {
             this.posX = this.blinky.x + x - this.pacman.x; // Side a
             this.posY = this.blinky.y + y - this.pacman.y; // side b
         }
-        else if (ghost === 2) {
+        if (ghost === 2) {
             let offset = this.#findOffset(2)
             this.posX = this.pinky.x + x - this.pacman.x - offset.x;
             this.posY = this.pinky.y + y - this.pacman.y - offset.y;
         }
-        else if (ghost === 3) {
+        if (ghost === 3) {
             this.findTargetInky()
             this.posX = this.inky.x + x - this.targetx;
             this.posY = this.inky.x + y - this.targety;
         }
-        else if (ghost === 4) {
+        if (ghost === 4) {
 
         }
 
@@ -216,13 +217,13 @@ class GridSystem { //TODO fortsette
         if (GhostID === 1) {
             return this.rotationB;
         }
-        else if (GhostID === 2) {
+        if (GhostID === 2) {
             return this.rotationP;
         }
-        else if (GhostID === 3) {
+        if (GhostID === 3) {
             return this.rotationI;
         }
-        else if (GhostID === 4) {
+        if (GhostID === 4) {
             return this.rotationC;
         }
     }
