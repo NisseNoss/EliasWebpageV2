@@ -116,10 +116,17 @@ body {
     min-height: 550px;
     box-shadow: 3px 3px 2px 1px rgba(0, 0, 0, 0.2);
     margin-bottom: 10px;
-}
 
-.main-window p {
-    color: #CCCCCC;
+    p {
+        color: #CCCCCC;
+    }
+
+    h3
+    {
+        color: #CCCCCC;
+        font-size: 2em;
+        text-align: center;
+    }
 }
 
 //############################################################# --- Footer
@@ -239,6 +246,21 @@ body {
     .futa {
         width: 80%;
         margin: auto;
+    }
+
+    .main-window {
+        line-height: 1.5em;
+        p
+        {
+            padding: 0 10px 0px 10px;
+            text-align: center;
+        }
+
+        h3
+        {
+            padding: 7px 0 0.5em 0;
+        }
+
     }
 }
 

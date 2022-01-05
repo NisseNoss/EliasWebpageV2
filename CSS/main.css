@@ -100,6 +100,10 @@ body {
   align-items: center;
 }
 
+.spill {
+  color: white;
+}
+
 .main-window {
   width: 95%;
   display: flex;
@@ -111,9 +115,13 @@ body {
   box-shadow: 3px 3px 2px 1px rgba(0, 0, 0, 0.2);
   margin-bottom: 10px;
 }
-
 .main-window p {
   color: #CCCCCC;
+}
+.main-window h3 {
+  color: #CCCCCC;
+  font-size: 2em;
+  text-align: center;
 }
 
 .futa-container {
@@ -234,6 +242,17 @@ body {
   .futa {
     width: 80%;
     margin: auto;
+  }
+
+  .main-window {
+    line-height: 1.5em;
+  }
+  .main-window p {
+    padding: 0 10px 0px 10px;
+    text-align: center;
+  }
+  .main-window h3 {
+    padding: 7px 0 0.5em 0;
   }
 }
 @media (min-width: 850px) {
