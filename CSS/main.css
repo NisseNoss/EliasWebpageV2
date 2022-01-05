@@ -124,6 +124,16 @@ body {
   text-align: center;
 }
 
+.pic {
+  display: grid;
+  place-items: center;
+  padding: 10px 0 0 0;
+}
+.pic img {
+  width: 25%;
+  height: auto;
+}
+
 .futa-container {
   width: 100%;
   margin: auto;

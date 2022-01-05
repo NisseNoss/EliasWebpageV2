@@ -127,6 +127,18 @@ body {
         font-size: 2em;
         text-align: center;
     }
+
+}
+.pic
+{
+    display: grid;
+    place-items: center;
+    padding: 10px 0 0 0;
+    img
+    {
+        width: 25%;
+        height: auto;
+    }
 }
 
 //############################################################# --- Footer
