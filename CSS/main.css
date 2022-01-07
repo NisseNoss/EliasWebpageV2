@@ -130,8 +130,7 @@ body {
   padding: 10px 0 0 0;
 }
 .pic img {
-  width: 25%;
-  height: auto;
+  border-radius: 15%;
 }
 
 .futa-container {
@@ -193,9 +192,6 @@ body {
   }*/
   .menu-container {
     width: 90%;
-  }
-
-  .menu-container {
     height: 100px;
     justify-content: space-between;
   }
@@ -263,12 +259,15 @@ body {
   .main-window h3 {
     padding: 7px 0 0.5em 0;
   }
+
+  .pic img {
+    width: 40%;
+    height: auto;
+  }
 }
 @media (min-width: 850px) {
-  /* Hvis den er stor */
   .header-container {
     flex-direction: row;
-    /* Places logo on the same line as .main-menu */
     justify-content: space-around;
     height: 160px;
   }
@@ -299,12 +298,16 @@ body {
     width: 80%;
     margin: auto;
   }
+
+  .pic img {
+    width: 30%;
+    height: auto;
+  }
 }
 @media (max-width: 550px) {
   .main-menu a {
     border-bottom: 2px solid #ddd;
   }
-
   .main-menu a:hover {
     border-bottom-color: #007ACC;
   }
