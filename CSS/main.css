@@ -124,6 +124,16 @@ body {
   text-align: center;
 }
 
+.yess {
+  display: grid;
+  place-items: center;
+  padding: 10px 0 0 0;
+}
+.yess img {
+  height: auto;
+  width: 50%;
+}
+
 .pic {
   display: grid;
   place-items: center;

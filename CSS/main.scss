@@ -126,8 +126,19 @@ body {
         font-size: 2em;
         text-align: center;
     }
-
 }
+
+.yess {
+    display: grid;
+    place-items: center;
+    padding: 10px 0 0 0;
+    img
+    {
+        height: auto;
+        width: 50%;
+    }
+}
+
 .pic
 {
     display: grid;
