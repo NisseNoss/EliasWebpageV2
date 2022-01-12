@@ -103,6 +103,8 @@ body {
 }
 .spill {
     color: white;
+    border-bottom: 2px solid white;
+
 }
 
 .main-window {
@@ -116,7 +118,8 @@ body {
     box-shadow: 3px 3px 2px 1px rgba(0, 0, 0, 0.2);
     margin-bottom: 10px;
 
-    p {
+    p
+    {
         color: #CCCCCC;
     }
 
@@ -126,12 +129,26 @@ body {
         font-size: 2em;
         text-align: center;
     }
+
+}
+
+.server {
+    display: grid;
+    place-items: center;
+    padding: 10px 0 0 0;
+
+    img
+    {
+        height: auto;
+        width: 75%;
+    }
 }
 
 .yess {
     display: grid;
     place-items: center;
     padding: 10px 0 0 0;
+
     img
     {
         height: auto;
@@ -147,6 +164,17 @@ body {
     img
     {
         border-radius: 15%;
+    }
+}
+
+.pacman {
+    display: grid;
+    place-items: center;
+
+    img
+    {
+        height: auto;
+        width: 75%;
     }
 }
 

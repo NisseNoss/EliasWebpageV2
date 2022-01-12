@@ -102,6 +102,7 @@ body {
 
 .spill {
   color: white;
+  border-bottom: 2px solid white;
 }
 
 .main-window {
@@ -124,6 +125,16 @@ body {
   text-align: center;
 }
 
+.server {
+  display: grid;
+  place-items: center;
+  padding: 10px 0 0 0;
+}
+.server img {
+  height: auto;
+  width: 75%;
+}
+
 .yess {
   display: grid;
   place-items: center;
@@ -141,6 +152,15 @@ body {
 }
 .pic img {
   border-radius: 15%;
+}
+
+.pacman {
+  display: grid;
+  place-items: center;
+}
+.pacman img {
+  height: auto;
+  width: 75%;
 }
 
 .futa-container {
