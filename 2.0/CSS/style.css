@@ -39,7 +39,7 @@
 
 #intro {
   display: flex;
-  flex-display: row;
+  flex-direction: row;
 }
 
 /*# sourceMappingURL=style.css.map */
