@@ -14,7 +14,7 @@
   flex-direction: row;
   justify-content: space-between;
   border-bottom: 1px solid black;
-  width: 90%;
+  width: 85%;
   margin: auto;
 }
 
@@ -39,7 +39,20 @@
 
 #intro {
   display: flex;
+}
+
+.intro {
+  display: flex;
   flex-direction: row;
+  min-height: 650px;
+  margin: 0 0 0 auto;
+}
+.intro .text {
+  min-width: 500px;
+}
+.intro .pic {
+  min-width: 830px;
+  border: 1px solid black;
 }
 
 /*# sourceMappingURL=style.css.map */
