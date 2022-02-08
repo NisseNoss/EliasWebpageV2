@@ -49,25 +49,19 @@ $contrast: #fcdf29;
   }
 }
 
-#intro
-{
-  display: flex;
-}
-
 .intro
 {
   display: flex;
   flex-direction: row;
+  justify-content: center;
   min-height: 650px;
-  margin: 0 0 0 auto;
   .text
   {
-    min-width: 500px;
   }
 
   .pic
   {
-    min-width: 830px;
     border: 1px solid black;
   }
 }
+
