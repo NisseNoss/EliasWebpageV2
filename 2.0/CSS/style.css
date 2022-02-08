@@ -37,14 +37,22 @@
   color: #8e39ff;
 }
 
-.intro {
+#intro {
+  display: flex;
+}
+#intro .intro {
   display: flex;
   flex-direction: row;
-  justify-content: center;
   min-height: 650px;
+  margin: 0 0 0 auto;
 }
-.intro .pic {
+#intro .intro .pic {
   border: 1px solid black;
+}
+#intro .intro .pic img {
+  height: auto;
+  width: 100%;
+  object-fit: cover;
 }
 
 #bio {

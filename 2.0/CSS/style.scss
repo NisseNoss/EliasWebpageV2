@@ -49,17 +49,24 @@ $contrast: #fcdf29;
   }
 }
 
-.intro
-{
+#intro {
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  min-height: 650px;
-  //margin: 0 0 0 auto;
 
-  .pic
-  {
-    border: 1px solid black;
+  .intro {
+    display: flex;
+    flex-direction: row;
+    min-height: 650px;
+    margin: 0 0 0 auto;
+
+    .pic {
+      border: 1px solid black;
+
+      img {
+        height: auto;
+        width: 100%;
+        object-fit: cover;
+      }
+    }
   }
 }
 
