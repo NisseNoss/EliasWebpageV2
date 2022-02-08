@@ -55,9 +55,7 @@ $contrast: #fcdf29;
   flex-direction: row;
   justify-content: center;
   min-height: 650px;
-  .text
-  {
-  }
+  //margin: 0 0 0 auto;
 
   .pic
   {
@@ -65,3 +63,8 @@ $contrast: #fcdf29;
   }
 }
 
+#bio
+{
+  background-color: #6733e2;
+  min-height: 650px;
+}

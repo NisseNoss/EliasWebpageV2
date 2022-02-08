@@ -47,4 +47,9 @@
   border: 1px solid black;
 }
 
+#bio {
+  background-color: #6733e2;
+  min-height: 650px;
+}
+
 /*# sourceMappingURL=style.css.map */
