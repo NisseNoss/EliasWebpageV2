@@ -12,6 +12,7 @@ $contrast: #fcdf29;
   text-decoration: none;
   font-family: 'Ubuntu', sans-serif;
   font-size: 1.1rem;
+  //overflow: hidden;
 }
 
 #header
@@ -49,25 +50,9 @@ $contrast: #fcdf29;
   }
 }
 
-#intro {
-  display: flex;
-
-  .intro {
-    display: flex;
-    flex-direction: row;
-    min-height: 650px;
-    margin: 0 0 0 auto;
-
-    .pic {
-      border: 1px solid black;
-
-      img {
-        height: auto;
-        width: 100%;
-        object-fit: cover;
-      }
-    }
-  }
+#intro
+{
+  grid-template-areas: "space intro intro intro intpic intpic intpic intpic intpic intpic";
 }
 
 #bio

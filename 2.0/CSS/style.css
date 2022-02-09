@@ -38,21 +38,7 @@
 }
 
 #intro {
-  display: flex;
-}
-#intro .intro {
-  display: flex;
-  flex-direction: row;
-  min-height: 650px;
-  margin: 0 0 0 auto;
-}
-#intro .intro .pic {
-  border: 1px solid black;
-}
-#intro .intro .pic img {
-  height: auto;
-  width: 100%;
-  object-fit: cover;
+  grid-template-areas: "space intro intro intro intpic intpic intpic intpic intpic intpic";
 }
 
 #bio {
