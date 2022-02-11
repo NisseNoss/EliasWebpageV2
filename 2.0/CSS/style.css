@@ -38,7 +38,27 @@
 }
 
 #intro {
-  grid-template-areas: "space intro intro intro intpic intpic intpic intpic intpic intpic";
+  display: grid;
+  grid-template-areas: "space intro intro intro intpic intpic intpic intpic intpic intpic intpic intpic";
+  min-height: 600px;
+}
+#intro .text {
+  grid-area: intro;
+  padding: 30px 20px 30px 40px;
+}
+#intro .text h1 {
+  margin-top: 60px;
+  color: #6733e2;
+  font-size: 3rem;
+}
+#intro .text p {
+  word-wrap: break-word;
+  position: relative;
+}
+#intro .pic {
+  grid-area: intpic;
+  background-image: url("/Bilder/dog.jpg");
+  background-position: 50% 50%;
 }
 
 #bio {
