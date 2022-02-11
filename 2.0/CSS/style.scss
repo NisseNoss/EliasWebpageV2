@@ -50,35 +50,34 @@ $contrast: #fcdf29;
   }
 }
 
-#intro
-{
+#intro {
   display: grid;
-  grid-template-areas: "space intro intro intro intpic intpic intpic intpic intpic intpic intpic intpic";
+  grid-template-areas: "space intro intro intro intpic intpic intpic intpic intpic";
+  grid-template-columns: repeat(9, 1fr);
   min-height: 600px;
 
-  .text
-  {
+  .text {
     grid-area: intro;
     padding: 30px 20px 30px 40px;
 
-    h1
-    {
-      margin-top: 60px;
+    h1 {
+      margin-top: 100px;
       color: $textcolor;
       font-size: 3rem;
+      max-width: max-content;
     }
-    p
-    {
+
+    p {
+      margin-top: 1rem;
+      line-height: 1.5;
       word-wrap: break-word;
-      position: relative;
     }
   }
-  .pic
-  {
-    grid-area: intpic;
-    background-image: url("/Bilder/dog.jpg");
-    background-position: 50% 50%;
-  }
+    .pic {
+      grid-area: intpic;
+      background-image: url("/Bilder/dog.jpg");
+      background-position: 50% 50%;
+    }
 
 }
 
