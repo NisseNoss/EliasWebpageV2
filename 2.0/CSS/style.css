@@ -39,8 +39,8 @@
 
 #intro {
   display: grid;
-  grid-template-areas: "space intro intro intro intpic intpic intpic intpic intpic";
-  grid-template-columns: repeat(9, 1fr);
+  grid-template-areas: "space intro intro intro intro intpic intpic intpic intpic intpic intpic";
+  grid-template-columns: repeat(11, 1fr);
   min-height: 600px;
 }
 #intro .text {
@@ -65,16 +65,21 @@
 }
 
 #bio {
+  display: grid;
+  grid-template-areas: "biopic biopic biopic biopic biopic about about about about about about";
+  grid-template-columns: repeat(11, 1fr);
   background-color: #6733e2;
   min-height: 600px;
-  display: grid;
-  grid-template-areas: "space biopic biopic biopic about about about about space";
-  grid-template-columns: repeat(9, 1fr);
 }
 #bio .bio-pic {
   grid-area: biopic;
   background-image: url("/Bilder/Selfi.jpg");
-  background-position: 50% 50%;
+  background-position: 10% 10%;
+  background-size: cover;
+  margin: 40px;
+}
+#bio .about {
+  grid-area: about;
 }
 
 /*# sourceMappingURL=style.css.map */
