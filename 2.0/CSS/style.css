@@ -13,7 +13,6 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  border-bottom: 1px solid black;
   width: 85%;
   margin: auto;
 }
@@ -39,9 +38,9 @@
 
 #intro {
   display: grid;
-  grid-template-areas: "space intro intro intro intro intpic intpic intpic intpic intpic intpic";
+  grid-template-areas: "space space intro intro intro intpic intpic intpic intpic intpic intpic";
   grid-template-columns: repeat(11, 1fr);
-  min-height: 600px;
+  min-height: 650px;
 }
 #intro .text {
   grid-area: intro;
@@ -66,16 +65,16 @@
 
 #bio {
   display: grid;
-  grid-template-areas: "biopic biopic biopic biopic biopic biopic about about about about about";
+  grid-template-areas: "biopic biopic biopic biopic biopic about about about about about about";
   grid-template-columns: repeat(11, 1fr);
-  min-height: 600px;
+  min-height: 750px;
 }
 #bio .bio-pic {
   grid-area: biopic;
   background-image: url("/Bilder/Selfi.jpg");
   background-position: 50% 50%;
   background-size: cover;
-  margin: 100px;
+  margin: 100px 0 25px 25px;
   border-radius: 5px;
 }
 #bio .about {
